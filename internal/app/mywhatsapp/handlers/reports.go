@@ -1,10 +1,8 @@
 package handlers
 
 import (
-	"database/sql"
+	"github.com/mdanzinger/whatsapp/internal/pkg/store"
 	"net/http"
-
-	"github.com/mdanzinger/whatsapp/internal/app/mywhatsapp/db"
 
 	"github.com/mdanzinger/whatsapp/internal/pkg/reports"
 )
@@ -13,9 +11,14 @@ import (
 func newReport(w http.ResponseWriter, r *http.Request) {
 	// Some validation..
 
-	store := db.NewReportStore(&sql.DB{})
+	store := store.NewReportStore()
 	report := reports.NewReport(store)
 
-	report.Read(123)
+	report.Create(&reports.Report{
+		ReportID: "123",
+		Content: reports.ReportData{
+			Name: "Some Reporttt",
+		},
+	})
 
 }

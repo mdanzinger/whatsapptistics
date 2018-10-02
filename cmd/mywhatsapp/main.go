@@ -1,15 +1,15 @@
 package main
 
 import (
-	"net/http"
-
 	"github.com/mdanzinger/whatsapp/internal/app/mywhatsapp/handlers"
 	"github.com/mdanzinger/whatsapp/internal/app/mywhatsapp/server"
 )
 
 func main() {
-	r := server.NewServer()
-	handlers.RegisterRoutes(r.Router)
+	// Create server and setup routes
+	s := server.NewServer()
+	handlers.Setup(s)
 
-	http.ListenAndServe(":8081", r)
+	// Start server
+	s.Start(":8080")
 }

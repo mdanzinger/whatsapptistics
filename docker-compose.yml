@@ -1,0 +1,36 @@
+version: '3.3'
+
+
+networks:
+  default:
+    external: false
+  web:
+    external: true
+
+services:
+  admin:
+    #build: "./mywhatsapp"
+    image: mdanzinger/test
+    tty: true
+    networks:
+      - web
+      - default
+
+    ports:
+      - "8090"
+    deploy:
+      replicas: 3
+      labels:
+        - "traefik.frontend.rule=HostRegexp:{subdomain:[a-z0-1]+}.mendy.ca"
+        - "traefik.docker.network=web"
+        - "traefik.port=8090"
+
+  visualizer:
+    image: dockersamples/visualizer:stable
+    ports:
+      - "8081:8080"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    deploy:
+      placement:
+        constraints: [node.role == manager]

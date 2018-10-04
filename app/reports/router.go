@@ -15,15 +15,15 @@ import (
 )
 
 func RegisterRoutes(router *mux.Router) {
-	router.HandleFunc("/reports", addReport).Methods("POST")
-	router.HandleFunc("/reports", uploadReport).Methods("GET")
-	router.HandleFunc("/reports/{report_id}", viewReport).Methods("GET")
-	router.HandleFunc("/reports/{report_id}", deleteReport).Methods("DEL")
+	router.HandleFunc("/report", addReport).Methods("POST")
+	router.HandleFunc("/report", uploadReport).Methods("GET")
+	router.HandleFunc("/report/{report_id}", viewReport).Methods("GET")
+	router.HandleFunc("/report/{report_id}", deleteReport).Methods("DEL")
 }
 
 func uploadReport(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "text/html")
-	html := `<form action="/reports" method="post" enctype="multipart/form-data">
+	html := `<form action="/report" method="post" enctype="multipart/form-data">
     Select image to upload:
     <input type="file" name="file" id="file">
     <input type="text" name="email" id="email">

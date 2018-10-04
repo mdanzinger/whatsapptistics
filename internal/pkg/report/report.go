@@ -1,4 +1,4 @@
-package reports
+package report
 
 type Report struct {
 	ReportID string     `json:"ReportID"`

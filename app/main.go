@@ -7,7 +7,7 @@ import (
 	"github.com/gorilla/mux"
 
 	//"github.com/mdanzinger/whatsapp/mywhatsapp/common"
-	//"github.com/mdanzinger/whatsapp/mywhatsapp/reports"
+	//"github.com/mdanzinger/whatsapp/mywhatsapp/report"
 	"whatsapp/app/common"
 	"whatsapp/app/reports"
 )

@@ -1,4 +1,4 @@
-package store
+package dynamodb
 
 import (
 	"fmt"
@@ -6,16 +6,18 @@ import (
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/dynamodb"
 	"github.com/aws/aws-sdk-go/service/dynamodb/dynamodbattribute"
+	"github.com/mdanzinger/whatsapp/internal/pkg/cache"
 	"os"
 
-	"github.com/mdanzinger/whatsapp/internal/pkg/reports"
+	"github.com/mdanzinger/whatsapp/internal/pkg/report"
 )
 
 type ReportStore struct {
-	db *dynamodb.DynamoDB
+	db    *dynamodb.DynamoDB
+	Cache cache.ReportCache
 }
 
-func (s *ReportStore) Create(r *reports.Report) (bool, error) {
+func (s *ReportStore) Create(r *report.Report) (bool, error) {
 	av, err := dynamodbattribute.MarshalMap(r)
 
 	if err != nil {
@@ -40,17 +42,17 @@ func (s *ReportStore) Create(r *reports.Report) (bool, error) {
 	return true, nil
 }
 
-func (s *ReportStore) Read(r int) (*reports.Report, error) {
-	fmt.Printf("Getting report ID: %v ", r)
-	return &reports.Report{}, nil
+func (s *ReportStore) Read(r int) (*report.Report, error) {
+	r, err := s.Cache.get(r)
+	return &report.Report{}, nil
 }
 
-func (s *ReportStore) Update(r *reports.Report) (bool, error) {
+func (s *ReportStore) Update(r *report.Report) (bool, error) {
 	fmt.Printf("Updating report ID: %v ", r.ReportID)
 	return true, nil
 }
 
-func (s *ReportStore) Delete(r *reports.Report) (bool, error) {
+func (s *ReportStore) Delete(r *report.Report) (bool, error) {
 	fmt.Printf("Deleting report ID: %v ", r.ReportID)
 	return true, nil
 }
@@ -63,6 +65,10 @@ func NewReportStore() *ReportStore {
 
 	// Create DynamoDB client
 	svc := dynamodb.New(sess)
+
+
+	cache :=
+
 	return &ReportStore{
 		db: svc,
 	}

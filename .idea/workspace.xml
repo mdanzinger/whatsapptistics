@@ -2,17 +2,19 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="0cf721e6-c618-4674-8df2-c58684a23063" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/internal/pkg/store/reports_dynamodb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/watcherTasks.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/watcherTasks.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/cache/cache.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/cache/reports.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/report/cache.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/report/repository.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/report/usecase.go" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/internal/pkg/report/usecase/report_usecase.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmd/mywhatsapp/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/cmd/mywhatsapp/main.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/app/mywhatsapp/db/reports_mysql.go" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/main.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/reports/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/app/reports/router.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/app/mywhatsapp/db/sql.go" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/app/mywhatsapp/server/server.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/app/mywhatsapp/server/server.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/internal/pkg/reports/report.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/reports/report.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/reports/report.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/report/report.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/internal/pkg/store/reports_dynamodb.go" beforeDir="false" afterPath="$PROJECT_DIR$/internal/pkg/store/dynamodb/reports_dynamodb.go" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -68,108 +70,131 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="go" value="5" />
+          <entry key="go" value="15" />
           <entry key="sum" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="Go" value="5" />
+          <entry key="Go" value="15" />
           <entry key="PLAIN_TEXT" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="go" value="2330" />
+          <entry key="go" value="3866" />
           <entry key="mod" value="6" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="DTD" value="6" />
-          <entry key="Go" value="2330" />
+          <entry key="Go" value="3866" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/cmd/mywhatsapp/main.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-              <folding>
-                <element signature="e#14#169#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/server/server.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="28" column="33" selection-start-line="28" selection-start-column="33" selection-end-line="28" selection-end-column="33" />
-              <folding>
-                <element signature="e#16#64#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/pkg/reports/report.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="420">
-              <caret line="28" selection-start-line="28" selection-end-line="28" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="5" selection-start-line="5" selection-end-line="5" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/internal/pkg/store/reports_dynamodb.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="404">
-              <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
-              <folding>
-                <element signature="e#12#101#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="150">
-              <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-              <folding>
-                <element signature="e#18#67#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/go.mod">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-    </leaf>
+    <splitter split-orientation="horizontal" split-proportion="0.5">
+      <split-first>
+        <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/cmd/mywhatsapp/main.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="165">
+                  <caret line="11" selection-start-line="11" selection-end-line="11" />
+                  <folding>
+                    <element signature="e#14#169#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="75">
+                  <caret line="5" selection-start-line="5" selection-end-line="5" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/report/usecase.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="120">
+                  <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/report/usecase/report_usecase.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/report/repository.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="90">
+                  <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/store/dynamodb/reports_dynamodb.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="956">
+                  <caret line="69" column="12" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
+                  <folding>
+                    <element signature="e#12#101#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/cache/cache.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="60">
+                  <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+          <file pinned="false" current-in-tab="false">
+            <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="240">
+                  <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+                  <folding>
+                    <element signature="e#18#67#0" expanded="true" />
+                  </folding>
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-first>
+      <split-second>
+        <leaf>
+          <file pinned="false" current-in-tab="true">
+            <entry file="file://$PROJECT_DIR$/internal/pkg/report/usecase.go">
+              <provider selected="true" editor-type-id="text-editor">
+                <state relative-caret-position="120">
+                  <caret line="8" selection-start-line="8" selection-end-line="8" />
+                </state>
+              </provider>
+            </entry>
+          </file>
+        </leaf>
+      </split-second>
+    </splitter>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
@@ -219,9 +244,17 @@
         <option value="$PROJECT_DIR$/internal/app/mywhatsapp/server/server.go" />
         <option value="$PROJECT_DIR$/cmd/mywhatsapp/main.go" />
         <option value="$PROJECT_DIR$/internal/app/mywhatsapp/db/reports_dynamodb.go" />
-        <option value="$PROJECT_DIR$/internal/pkg/reports/report.go" />
         <option value="$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go" />
         <option value="$PROJECT_DIR$/internal/pkg/store/reports_dynamodb.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/reports/report.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/cache/reports.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/cache/cache.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/store/dynamodb/reports_dynamodb.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/reports/usecase.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/reports/repository.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/reports/usecase/report_usecase.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/report/cache.go" />
+        <option value="$PROJECT_DIR$/internal/pkg/report/usecase/report_usecase.go" />
       </list>
     </option>
   </component>
@@ -231,9 +264,9 @@
     <detection-done>true</detection-done>
     <sorting>DEFINITION_ORDER</sorting>
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
-    <option name="x" value="-3766" />
-    <option name="y" value="113" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="-1734" />
+    <option name="y" value="57" />
     <option name="width" value="1556" />
     <option name="height" value="970" />
   </component>
@@ -271,23 +304,14 @@
               <item name="mywhatsapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="mywhatsapp" type="462c0819:PsiDirectoryNode" />
               <item name="internal" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="mywhatsapp" type="462c0819:PsiDirectoryNode" />
-              <item name="db" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="mywhatsapp" type="b2602c69:ProjectViewProjectNode" />
-              <item name="mywhatsapp" type="462c0819:PsiDirectoryNode" />
-              <item name="internal" type="462c0819:PsiDirectoryNode" />
-              <item name="app" type="462c0819:PsiDirectoryNode" />
-              <item name="mywhatsapp" type="462c0819:PsiDirectoryNode" />
-              <item name="handlers" type="462c0819:PsiDirectoryNode" />
+              <item name="pkg" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="mywhatsapp" type="b2602c69:ProjectViewProjectNode" />
               <item name="mywhatsapp" type="462c0819:PsiDirectoryNode" />
               <item name="internal" type="462c0819:PsiDirectoryNode" />
               <item name="pkg" type="462c0819:PsiDirectoryNode" />
+              <item name="report" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -309,11 +333,11 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/internal/app/mywhatsapp" />
+      <recent name="$PROJECT_DIR$/internal/pkg/store/dynamodb" />
       <recent name="$PROJECT_DIR$/internal/pkg/store" />
       <recent name="C:\Users\mendy\go\whatsapp\internal\app\mywhatsapp\server" />
       <recent name="C:\Users\mendy\go\whatsapp\pkg" />
-      <recent name="C:\Users\mendy\go\whatsapp\app" />
-      <recent name="C:\Users\mendy\GolandProjects\src\github.com\mdanzinger\whatsapp" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -354,21 +378,22 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-3766" y="113" width="1556" height="970" extended-state="0" />
+    <frame x="-1920" y="23" width="1920" height="1057" extended-state="6" />
+    <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.23778072" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.12353568" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Find" order="1" weight="0.32925472" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4966975" weight="0.32801822" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32915717" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.4966975" visible="true" weight="0.21036269" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32915717" />
       <window_info anchor="bottom" id="Thumbnails" order="7" weight="0.32998884" />
       <window_info anchor="bottom" id="Version Control" order="8" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="9" sideWeight="0.4993395" visible="true" weight="0.356492" />
+      <window_info anchor="bottom" id="Terminal" order="9" sideWeight="0.4993395" weight="0.356492" />
       <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5006605" side_tool="true" weight="0.356492" />
       <window_info anchor="bottom" id="Database Changes" order="11" show_stripe_button="false" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
@@ -408,12 +433,6 @@
     <integration-enabled>true</integration-enabled>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/service/s3/service.go" />
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/aws/session/session.go" />
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/service/s3/api.go" />
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/service/s3/s3manager/download.go" />
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/service/sns/api.go" />
-    <entry file="file://$USER_HOME$/aws/aws-sdk-go/aws/awsutil/string_value.go" />
     <entry file="file://$USER_HOME$/aws/aws-sdk-go/aws/awserr/error.go" />
     <entry file="file://$PROJECT_DIR$/app/go.sum">
       <provider selected="true" editor-type-id="text-editor" />
@@ -490,9 +509,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pkg/pkg/cmd/server/server.go" />
-    <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/db/sql.go">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/analyzer_service/main.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="85">
@@ -504,6 +520,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state>
           <caret column="11" selection-start-column="11" selection-end-column="11" />
+          <folding>
+            <element signature="e#14#227#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -545,20 +564,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go">
+    <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/db/sql.go">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/cache/reports.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="18" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-          <folding>
-            <element signature="e#18#67#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="45">
+          <caret line="3" column="14" selection-start-line="3" selection-start-column="14" selection-end-line="3" selection-end-column="14" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/pkg/reports/report.go">
+    <entry file="file://$PROJECT_DIR$/internal/pkg/cache/cache.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="420">
-          <caret line="28" selection-start-line="28" selection-end-line="28" />
+        <state relative-caret-position="60">
+          <caret line="4" column="16" selection-start-line="4" selection-start-column="16" selection-end-line="4" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/handlers.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" lean-forward="true" selection-start-line="16" selection-end-line="16" />
+          <folding>
+            <element signature="e#18#67#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -582,6 +611,37 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/store/dynamodb/reports_dynamodb.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="956">
+          <caret line="69" column="12" selection-start-line="69" selection-start-column="12" selection-end-line="69" selection-end-column="12" />
+          <folding>
+            <element signature="e#12#101#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/report/repository.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="4" lean-forward="true" selection-start-line="6" selection-start-column="4" selection-end-line="6" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/report/cache.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="75">
+          <caret line="5" selection-start-line="5" selection-end-line="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/report/report.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" column="33" selection-start-line="17" selection-start-column="33" selection-end-line="17" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/internal/app/mywhatsapp/handlers/reports.go">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="75">
@@ -589,13 +649,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/internal/pkg/store/reports_dynamodb.go">
+    <entry file="file://$PROJECT_DIR$/internal/pkg/report/usecase.go">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="404">
-          <caret line="37" column="63" selection-start-line="37" selection-start-column="63" selection-end-line="37" selection-end-column="63" />
-          <folding>
-            <element signature="e#12#101#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="120">
+          <caret line="8" lean-forward="true" selection-start-line="8" selection-end-line="8" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/internal/pkg/report/usecase/report_usecase.go">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="37" selection-start-line="16" selection-start-column="37" selection-end-line="16" selection-end-column="37" />
         </state>
       </provider>
     </entry>

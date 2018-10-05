@@ -1,41 +1,24 @@
 package report
 
+import "context"
+
 type Report struct {
-	ReportID string     `json:"ReportID"`
-	Content  ReportData `json:"content"`
-	Store
+	ReportID string `json:"ReportID"`
+	Content  []byte `json:"content"`
 }
 
-type ReportData struct {
-	Name string `json:"name"`
+type ReportAnalytics struct {
+	MostFrequentWords types.Words
 }
 
-// Crud Interface
-type Store interface {
-	Create(*Report) (bool, error)
-	Read(id int) (*Report, error)
-	Update(*Report) (bool, error)
-	Delete(*Report) (bool, error)
+type ReportServer interface {
+	Upload(context.Context, *Report) error
+	Notify(*Report) error
+	Get(string) error
 }
 
-func NewReport(s Store) *Report {
-	return &Report{
-		Store: s,
-	}
-}
-
-func (r *Report) Create(report *Report) (bool, error) {
-	return r.Store.Create(report)
-}
-
-func (r *Report) Read(i int) (*Report, error) {
-	return r.Store.Read(i)
-}
-
-func (r *Report) Update(report *Report) (bool, error) {
-	return r.Store.Update(report)
-}
-
-func (r *Report) Delete(*Report) (bool, error) {
-	return r.Store.Delete(r)
+type ReportAnalyzer interface {
+	Start() error
+	Analyze(*Report) *ReportAnalytics
+	Store(*ReportAnalytics) error
 }

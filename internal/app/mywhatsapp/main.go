@@ -1,30 +1,26 @@
 package main
 
 import (
-	"fmt"
-	"github.com/aws/aws-sdk-go/aws/session"
-	"github.com/go-redis/redis"
-	"github.com/mdanzinger/whatsapp/internal/pkg/store/dynamodb"
-	redisStore "github.com/mdanzinger/whatsapp/internal/pkg/store/redis"
+	"github.com/mdanzinger/mywhatsapp/internal/app/mywhatsapp/http"
+	"github.com/mdanzinger/mywhatsapp/internal/pkg/notify/sns"
+	"github.com/mdanzinger/mywhatsapp/internal/pkg/report"
+	"github.com/mdanzinger/mywhatsapp/internal/pkg/storage/s3"
+	"github.com/mdanzinger/mywhatsapp/internal/pkg/store/dynamodb"
+	"github.com/mdanzinger/mywhatsapp/internal/pkg/store/redis"
 )
 
 func main() {
-	s, err := session.NewSession()
-	if err != nil {
-		fmt.Errorf("Error creating session -> %s", err)
-	}
-	c := redis.NewClient(&redis.Options{
-		Addr:     "localhost:6379",
-		Password: "", // no password set
-		DB:       0,  // use default DB
-	})
+	// Create server dependencies
+	cacher := redis.NewReportCache()
+	db := dynamodb.NewReportStore(cacher)
+	notifier := sns.NewReportNotifier()
+	storage := s3.NewReportStorage()
 
-	_, err = c.Ping().Result()
-	if err != nil {
-		fmt.Errorf("Error creating cache client -> %s", err)
-	}
+	reportServer := report.NewReportServer(db, notifier, storage)
 
-	r := redisStore.NewReportCache(c)
-	d := dynamodb.NewReportStore(s, r)
+	// Create Server
+	s := http.NewServer(reportServer)
+
+	s.ListenAndServe(":8080")
 
 }

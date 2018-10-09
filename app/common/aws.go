@@ -1,7 +1,7 @@
 package common
 
 import (
-	"bytes"
+	"github.com/aws/aws-sdk-go/service/s3"
 	"log"
 
 	"github.com/aws/aws-sdk-go/service/s3/s3manager"
@@ -62,7 +62,8 @@ func AddFileToS3(s *session.Session, file multipart.File, fileheader *multipart.
 	result, err := AWS_S3MANAGER.Upload(&s3manager.UploadInput{
 		Bucket: aws.String(S3_BUCKET),
 		Key:    aws.String(id.String()),
-		Body:   bytes.NewReader(buffer),
+		//Body:   bytes.NewReader(buffer),
+		Body: file,
 	})
 	if err != nil {
 		fmt.Println("Error", err)
@@ -113,25 +114,25 @@ func SendSNSMessage(s *session.Session, key string, email string) (err error) {
 	return nil
 }
 
-//func DownloadFile(s *session.Session, key *string) {
-//	file, err := os.Create(*key)
-//	if err != nil {
-//		fmt.Println("Unable to open file %q, %v", err)
-//	}
-//
-//	defer file.Close()
-//
-//	downloader := s3manager.NewDownloader(s)
-//
-//	numBytes, err := downloader.Download(file,
-//		&s3.GetObjectInput{
-//			Bucket: aws.String(S3_BUCKET),
-//			Key:    key,
-//		})
-//
-//	if err != nil {
-//		fmt.Println("Unable to download item %q, %v", file, err)
-//	}
-//
-//	fmt.Println("Downloaded", file.Name(), numBytes, "bytes")
-//}
+func DownloadFile(s *session.Session, key *string) {
+	file, err := os.Create(*key)
+	if err != nil {
+		fmt.Println("Unable to open file %q, %v", err)
+	}
+
+	defer file.Close()
+
+	downloader := s3manager.NewDownloader(s)
+
+	numBytes, err := downloader.Download(file,
+		&s3.GetObjectInput{
+			Bucket: aws.String(S3_BUCKET),
+			Key:    key,
+		})
+
+	if err != nil {
+		fmt.Println("Unable to download item %q, %v", file, err)
+	}
+
+	fmt.Println("Downloaded", file.Name(), numBytes, "bytes")
+}

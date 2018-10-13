@@ -17,7 +17,7 @@ type Report struct {
 }
 
 type ReportAnalytics struct {
-	SomethingCool string `json:"somethingCool"`
+	SomeCoolStats string `json:"somethingCool"`
 	//MostFrequentWords types.Words
 }
 
@@ -27,15 +27,23 @@ type ReportServer interface {
 	ReportNotifier
 }
 
-type ReportAnalyzer interface {
+type ReportAnalyzerService interface {
 	Start() error
-	Analyze(*Report) *ReportAnalytics
-	Store(context.Context, *Report) error
+	GetChat(string) (*Report, error) // Polls for messages
+	AnalyzeAndStore(*Report) error
 }
 
 type ReportStore interface {
 	Get(context.Context, string) (*Report, error)
 	Store(context.Context, *Report) error
+}
+
+type ReportPoller interface {
+	Poll() ([]Report, error)
+}
+
+type ReportAnalyzer interface {
+	Analyze(*Report) (*ReportAnalytics, error)
 }
 
 type ReportNotifier interface {

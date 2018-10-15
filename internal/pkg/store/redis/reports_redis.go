@@ -21,6 +21,7 @@ func (c *cache) Get(ctx context.Context, k string) (*report.Report, error) {
 	//o := c.cl.Get(k)
 	rjson, err := c.cl.Get(k).Result()
 	if err != nil {
+		fmt.Println(err)
 		return nil, err
 	}
 	r := &report.Report{}
@@ -31,8 +32,14 @@ func (c *cache) Get(ctx context.Context, k string) (*report.Report, error) {
 }
 
 func (c *cache) Store(ctx context.Context, r *report.Report) error {
-	err := c.cl.Set(r.ReportID, r, defaultExpirationTime).Err()
+	data, err := json.Marshal(&r)
 	if err != nil {
+		fmt.Println(err)
+		return err
+	}
+	err = c.cl.Set(r.ReportID, data, defaultExpirationTime).Err()
+	if err != nil {
+		fmt.Println(err)
 		return err
 	}
 	return nil

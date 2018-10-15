@@ -28,9 +28,7 @@ type ReportServer interface {
 }
 
 type ReportAnalyzerService interface {
-	Start() error
-	GetChat(string) (*Report, error) // Polls for messages
-	AnalyzeAndStore(*Report) error
+	Start()
 }
 
 type ReportStore interface {
@@ -38,6 +36,12 @@ type ReportStore interface {
 	Store(context.Context, *Report) error
 }
 
+type ReportStorage interface {
+	Download(string) ([]byte, error)
+	Upload(context.Context, *Report) error
+}
+
+//ReportPoller polls a service and returns a slice of report ids.
 type ReportPoller interface {
 	Poll() ([]Report, error)
 }

@@ -7,11 +7,11 @@ import (
 type reportServer struct {
 	store    ReportStore    // ex: db transactions
 	notifier ReportNotifier // ex: sns notification
-	storage  ReportStore    // ex: s3
+	storage  ReportStorage  // ex: s3
 }
 
 func (rs *reportServer) Upload(ctx context.Context, r *Report) error {
-	if err := rs.storage.Store(ctx, r); err != nil {
+	if err := rs.storage.Upload(ctx, r); err != nil {
 		return err
 	}
 	return nil
@@ -32,7 +32,7 @@ func (rs *reportServer) Get(ctx context.Context, key string) (*Report, error) {
 	return r, nil
 }
 
-func NewReportServer(store ReportStore, notifier ReportNotifier, storage ReportStore) *reportServer {
+func NewReportServer(store ReportStore, notifier ReportNotifier, storage ReportStorage) *reportServer {
 	return &reportServer{
 		store:    store,
 		notifier: notifier,

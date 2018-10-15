@@ -17,10 +17,7 @@ type storage struct {
 	downloader *s3manager.Downloader
 }
 
-func (s *storage) Store(ctx context.Context, report *report.Report) error {
-	// Remove dashes
-	//idProcessed := strings.Replace(id.String(), "-", "", -1)
-
+func (s *storage) Upload(ctx context.Context, report *report.Report) error {
 	result, err := s.uploader.UploadWithContext(ctx, &s3manager.UploadInput{
 		Bucket: aws.String("whatsappchats"),
 		Key:    aws.String(report.ReportID),
@@ -34,10 +31,10 @@ func (s *storage) Store(ctx context.Context, report *report.Report) error {
 	return nil
 }
 
-func (s *storage) Get(ctx context.Context, key string) (*report.Report, error) {
+func (s *storage) Download(key string) ([]byte, error) {
 	reportBuf := aws.NewWriteAtBuffer([]byte{})
 
-	_, err := s.downloader.DownloadWithContext(ctx, reportBuf,
+	_, err := s.downloader.Download(reportBuf,
 		&s3.GetObjectInput{
 			Bucket: aws.String("whatsappchats"),
 			Key:    aws.String(key),
@@ -49,9 +46,9 @@ func (s *storage) Get(ctx context.Context, key string) (*report.Report, error) {
 	}
 
 	// create reader
-	reportReader := bytes.NewReader(reportBuf.Bytes())
+	//reportReader := bytes.NewReader(reportBuf.Bytes())
 
-	return report.NewReport(reportReader), nil
+	return reportBuf.Bytes(), nil
 
 }
 

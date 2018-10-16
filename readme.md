@@ -4,7 +4,7 @@
 
 
 ---
-Android Regex for breaking apart chats:
+Android Regex for breaking apart chat:
 
 ```(?P<datetime>\d{1,2}\/\d{1,2}\/\d{2}, \d{1,2}:\d{1,2} ((?i)[ap]m))(?: - )(?P<name>.*?)(?::) (?P<message>.+)```
 

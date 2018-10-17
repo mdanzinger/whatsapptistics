@@ -1,5 +1,7 @@
 package report
 
+import "context"
+
 type Report struct {
 	ReportID      string `json:"ReportID"`
 	Email         string `json:"email"`
@@ -9,6 +11,6 @@ type Report struct {
 type ChatAnalytics map[string]interface{}
 
 type ReportRepository interface {
-	Get(id string) (*Report, error)
+	Get(ctx context.Context, id string) (*Report, error)
 	Store(*Report) error
 }

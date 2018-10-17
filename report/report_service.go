@@ -1,6 +1,9 @@
 package report
 
-import "log"
+import (
+	"context"
+	"log"
+)
 
 // ReportService represents a service for interacting with the Report Repository
 type ReportService interface {
@@ -14,8 +17,8 @@ type reportService struct {
 }
 
 // Get retrieves a report from an injected db
-func (rs *reportService) Get(id string) (*Report, error) {
-	r, err := rs.rr.Get(id)
+func (rs *reportService) Get(ctx context.Context, id string) (*Report, error) {
+	r, err := rs.rr.Get(ctx, id)
 	if err != nil {
 		rs.logger.Print(err)
 		return nil, err

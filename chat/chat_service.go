@@ -16,8 +16,8 @@ type ChatService interface {
 }
 
 type chatService struct {
-	cr     ChatRepoository
-	logger log.Logger
+	cr     ChatRepository
+	logger *log.Logger
 }
 
 // New creates a new Chat entity and uploads it to an injected storage repo
@@ -59,7 +59,7 @@ func (cs *chatService) Retrieve(id string) (*Chat, error) {
 	return c, nil
 }
 
-func NewChatService(cr ChatRepo, l log.Logger) *chatService {
+func NewChatService(cr ChatRepository, l *log.Logger) *chatService {
 	return &chatService{
 		cr:     cr,
 		logger: l,

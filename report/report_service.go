@@ -7,13 +7,13 @@ import (
 
 // ReportService represents a service for interacting with the Report Repository
 type ReportService interface {
-	Get(id string) (*Report, error)
+	Get(ctx context.Context, id string) (*Report, error)
 	Store(*Report) error
 }
 
 type reportService struct {
 	rr     ReportRepository
-	logger log.Logger
+	logger *log.Logger
 }
 
 // Get retrieves a report from an injected db
@@ -37,7 +37,7 @@ func (rs *reportService) Store(r *Report) error {
 }
 
 // NewReportService returns a ReportService instance with the dependencies injected
-func NewReportService(rr ReportRepository, logger log.Logger) *reportService {
+func NewReportService(rr ReportRepository, logger *log.Logger) *reportService {
 	return &reportService{
 		rr:     rr,
 		logger: logger,

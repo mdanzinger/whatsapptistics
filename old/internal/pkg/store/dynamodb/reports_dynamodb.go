@@ -13,7 +13,7 @@ import (
 
 type reportStore struct {
 	db    *dynamodb.DynamoDB
-	cache report.ReportStore
+	cache r
 }
 
 func (s *reportStore) Get(ctx context.Context, key string) (*report.Report, error) {

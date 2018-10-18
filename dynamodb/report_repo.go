@@ -56,7 +56,7 @@ func (s *reportRepo) Get(ctx context.Context, key string) (*report.Report, error
 	return report, nil
 }
 
-func (s *reportRepo) Store(ctx context.Context, r *report.Report) error {
+func (s *reportRepo) Store(r *report.Report) error {
 	i, err := dynamodbattribute.MarshalMap(r)
 
 	if err != nil {
@@ -69,7 +69,7 @@ func (s *reportRepo) Store(ctx context.Context, r *report.Report) error {
 	}
 
 	// Insert item into db
-	_, err = s.db.PutItemWithContext(ctx, input)
+	_, err = s.db.PutItem(input)
 
 	if err != nil {
 		//fmt.Println("Got error calling PutItem:")

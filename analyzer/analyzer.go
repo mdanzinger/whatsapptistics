@@ -14,7 +14,7 @@ type ChatAnalyzer interface {
 // analyzerService represents a service for analyzing chats via an injected analyzer
 type analyzerService struct {
 	a      ChatAnalyzer
-	logger log.Logger
+	logger *log.Logger
 }
 
 func (as *analyzerService) Analyze(c *chat.Chat) (*report.ChatAnalytics, error) {
@@ -27,7 +27,7 @@ func (as *analyzerService) Analyze(c *chat.Chat) (*report.ChatAnalytics, error) 
 }
 
 // NewAnalyzerService returns an instance of an analyzer service
-func NewAnalyzerService(a ChatAnalyzer, logger log.Logger) *analyzerService {
+func NewAnalyzerService(a ChatAnalyzer, logger *log.Logger) *analyzerService {
 	return &analyzerService{
 		a:      a,
 		logger: logger,

@@ -1,0 +1,36 @@
+version: '3.3'
+
+networks:
+  web:
+    external: true
+
+configs:
+  traefik.toml:
+    file: ./traefik.toml
+
+services:
+
+  traefik:
+    image: traefik:latest
+    ports:
+      - "80:80"
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    configs:
+      - source: traefik.toml
+        target: /etc/traefik/traefik.toml
+    labels:
+      - "traefik.enable=false"
+    environment: 
+      - AWS_ACCESS_KEY_ID=###############
+      - AWS_SECRET_ACCESS_KEY=#########
+      - AWS_REGION=us-east-2
+      - AWS_HOSTED_ZONE_ID=Z3VYJ824IUL7NY
+    networks:
+      - web 
+    deploy:
+      replicas: 1
+      placement:
+        constraints: [node.role == manager]  

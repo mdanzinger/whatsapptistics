@@ -1,0 +1,38 @@
+logLevel = "DEBUG"
+defaultEntryPoints = ["http", "https"]
+
+[web]
+  address = ":8080"
+  [web.auth.basic]
+    users = ["mendy:$apr1$V2EvDbJs$L/b7HKdzIoztRjyOx7Abu0"]
+
+[entryPoints]
+  [entryPoints.http]
+  address = ":80"
+  [entryPoints.https]
+  address = ":443"
+    [entryPoints.https.tls]
+
+[acme]
+  email = "mendydanzinger@gmail.com"
+  storage = "acme.json"
+  entryPoint = "https"
+  OnHostRule = true
+  acmeLogging = true
+  caServer = "https://acme-staging-v02.api.letsencrypt.org/directory"
+[acme.httpChallenge]
+  entryPoint = "http"
+
+[acme.dnsChallenge]
+  provider = "route53"
+  delayBeforeCheck = 0
+
+
+[docker]
+  domain = "localhost"
+  watch = true
+  swarmmode = true
+
+
+[[acme.domains]]
+   main = "*.mendy.ca"

@@ -15,24 +15,26 @@ func TestAnalyzer_Analyze(t *testing.T) {
 		parser: &iosParser{},
 	}
 	//android_chat, err := ioutil.ReadFile("../../resource/android_testchat.txt")
-	android_chat, err := ioutil.ReadFile("../../resource/_chat-ios.txt")
+	androidChat, err := ioutil.ReadFile("../../resource/_chat-ios.txt")
 
 	if err != nil {
 		t.Errorf("Error opening up android test chat")
 	}
 
 	c := &chat.Chat{
-		Content: android_chat,
+		Content: androidChat,
 	}
 
 	r, err := a.Analyze(c)
+
+	if err != nil {
+		t.Fatalf("Got error analyzing chat")
+	}
 
 	// TODO implement full coverage of the analyzer
 	//if r.WordsSent != 117 {
 	//	t.Fatalf("Report has counted %v words, should be %v", r.WordsSent, 117)
 	//}
-
-
 
 	// print chat for debugging
 	j, err := json.Marshal(r)

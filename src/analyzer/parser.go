@@ -33,6 +33,7 @@ func (p *iosParser) Date(line string) []byte {
 	tp, _ := time.Parse("2006-01-02", d)
 	return []byte(tp.Format("Jan 2006"))
 }
+
 func (p *iosParser) Hour(line string) []byte {
 	t := line[strings.Index(line, ",")+2 : strings.Index(line, "]")]
 	tp, _ := time.Parse("3:04:05 PM", t)
@@ -45,7 +46,7 @@ func (p *iosParser) Message(line string) []byte {
 	return []byte(line[strings.Index(line, ": ")+2:])
 }
 
-func (p *iosParser) Valid(line string) bool{
+func (p *iosParser) Valid(line string) bool {
 	return len(line) > 0 && (strings.Index(line, "[")) != -1
 }
 
@@ -70,7 +71,7 @@ func (p *androidParser) Message(line string) []byte {
 	return []byte(line[strings.Index(line, ": ")+2:])
 }
 
-func (p *androidParser) Valid(line string) bool{
+func (p *androidParser) Valid(line string) bool {
 	if len(line) == 0 {
 		return false
 	}

@@ -5,10 +5,10 @@ package analyzer
 var stopwords = map[string]string{
 	"omitted":      "", //omitted is for whatsapp images that are not exported
 	"a":            "",
-	"b": 			"",
-	"c": 			"",
-	"d":			"",
-	"e":			"",
+	"b":            "",
+	"c":            "",
+	"d":            "",
+	"e":            "",
 	"2":            "",
 	"-":            "",
 	"about":        "",
@@ -147,7 +147,7 @@ var stopwords = map[string]string{
 	"if":           "",
 	"in":           "",
 	"inc":          "",
-	"image": 		"",
+	"image":        "",
 	"audio":        "",
 	"i":            "",
 	"indeed":       "",

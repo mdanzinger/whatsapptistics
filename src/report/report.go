@@ -26,7 +26,7 @@ type ChatAnalytics struct {
 	HourList     Hourlist
 
 	// HourMap is used by the analyzer, it is not stored.
-	HourMap      map[string]int `json:"-"`
+	HourMap map[string]int `json:"-"`
 }
 
 // ParticipantAnalytics represents the analytics for a single participant in a chat
@@ -42,10 +42,9 @@ type ParticipantAnalytics struct {
 	MonthMap map[string]int `json:"-"`
 }
 
-
 // Hour represents a single hour
 type Hour struct {
-	Hour string
+	Hour     string
 	Messages int
 }
 
@@ -58,7 +57,7 @@ func (hl Hourlist) Less(i, j int) bool {
 	// Convert to numerical format to have an int to sort by
 	ti, _ := time.Parse("3:04 PM", hl[i].Hour)
 	tj, _ := time.Parse("3:04 PM", hl[j].Hour)
-	return ti.Format("15") <  tj.Format("15")
+	return ti.Format("15") < tj.Format("15")
 }
 
 // Word represents a unique word
@@ -74,14 +73,11 @@ func (wl Wordlist) Len() int           { return len(wl) }
 func (wl Wordlist) Swap(i, j int)      { wl[i], wl[j] = wl[j], wl[i] }
 func (wl Wordlist) Less(i, j int) bool { return wl[i].Usage > wl[j].Usage }
 
-
-
-// Month represents a single month 
+// Month represents a single month
 type Month struct {
-	Month string
+	Month    string
 	Messages int
 }
-
 
 // Monthlist is a slice of months that implements the sort interface to sort by month
 type Monthlist []Month
@@ -92,5 +88,5 @@ func (ml Monthlist) Less(i, j int) bool {
 	// Convert to numerical format to have an int to sort by
 	ti, _ := time.Parse("Jan 2006", ml[i].Month)
 	tj, _ := time.Parse("Jan 2006", ml[j].Month)
-	return ti.Format("0601") <  tj.Format("0601")
+	return ti.Format("0601") < tj.Format("0601")
 }

@@ -41,6 +41,13 @@ func TestIosParser_Sender(t *testing.T) {
 	}
 }
 
+func TestIosParser_Valid(t *testing.T) {
+	v := ios.Valid(iosMessage)
+	if !v {
+		t.Fatalf("Message is not valid, should be valid")
+	}
+}
+
 func TestAndroidParser_Date(t *testing.T) {
 	d := string(android.Date(androidMessage))
 	if d != "Nov 2017" {
@@ -66,6 +73,13 @@ func TestAndroidParser_Sender(t *testing.T) {
 	s := string(android.Sender(androidMessage))
 	if s != "Some Really Long Name" {
 		t.Fatalf("Name is %v, should be %v", s, "some Really Long Name")
+	}
+}
+
+func TestAndroidParser_Valid(t *testing.T) {
+	v := android.Valid(androidMessage)
+	if !v {
+		t.Fatalf("Message is not valid, should be valid")
 	}
 }
 

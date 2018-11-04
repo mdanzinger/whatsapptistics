@@ -5,6 +5,7 @@ import (
 	"bytes"
 	"sort"
 	"strings"
+	"unicode"
 
 	"github.com/mdanzinger/whatsapptistics/src/chat"
 	"github.com/mdanzinger/whatsapptistics/src/report"
@@ -18,11 +19,37 @@ type analyzer struct {
 func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 	r := &report.ChatAnalytics{}
 	participants := map[string]report.ParticipantAnalytics{}
-	messagesByHour := map[string]int{}
+	hourMap := map[string]int{}
 
 	scanner := bufio.NewScanner(strings.NewReader(string(chat.Content)))
+
+
+	// We use this to store the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines
+	var prevParticipant string
+
+	_ = prevParticipant
+
 	for scanner.Scan() {
-		line := scanner.Text()
+		line := stripCtlAndExtFromUTF8(scanner.Text())
+
+		// If it's not valid, it's a continuation of the previous message
+		if !a.parser.Valid(line) {
+			// We know the prevParticipant exists, no need to handle errors
+			p, _ := participants[prevParticipant]
+			words := strings.Fields(line)
+			p.WordsSent += len(words)
+
+			r.WordsSent += len(words)
+
+			// check and add words to wordmap
+			wordMap(&p, []byte(line))
+
+
+
+			participants[prevParticipant] = p
+
+			continue
+		}
 
 		// Parse line
 		date := a.parser.Date(line)
@@ -30,39 +57,46 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 		message := a.parser.Message(line)
 		sender := a.parser.Sender(line)
 
+
+
 		// increase message and word count
 		r.MessagesSent++
-		r.WordsSent = r.WordsSent + len(message)
 
-		// Increment MessagesByHour
+		words := strings.Fields(string(message))
+		r.WordsSent += len(words)
+
+		// Increment HourMap
 		// check if we have the hour in our map
-		if _, ok := messagesByHour[string(hour)]; !ok {
-			messagesByHour[string(hour)] = 1
+		if _, ok := hourMap[string(hour)]; !ok {
+			hourMap[string(hour)] = 1
 		} else {
-			messagesByHour[string(hour)]++
+			hourMap[string(hour)]++
 		}
 
 		// Check if the sender is in our participants map
 		p, ok := participants[string(sender)]
 		if !ok { // Participant not found, lets create a new participant and it to our map!
-			participants[string(sender)] = report.ParticipantAnalytics{WordMap: map[string]int{}, MessagesByMonth: map[string]int{}}
+			participants[string(sender)] = report.ParticipantAnalytics{WordMap: map[string]int{}, MonthMap: map[string]int{}}
 			// Hashmaps are fast... I'm just doing a lookup, but I should probably TODO: create the ParticipantsAnalytics object beforehand, and just insert it once after the conditional
 			p = participants[string(sender)]
 		}
 
 		// Increment messages sent and words sent
 		p.MessagesSent++
-		p.WordsSent = p.WordsSent + len(message)
+		p.WordsSent = p.WordsSent + len(words)
 
 		// check and add words to wordmap
 		wordMap(&p, message)
 
-		// Increment MessagesByMonth counter for participant
-		if _, ok := p.MessagesByMonth[string(date)]; !ok {
-			p.MessagesByMonth[string(date)] = 1
+		// Increment MonthMap counter for participant
+		if _, ok := p.MonthMap[string(date)]; !ok {
+			p.MonthMap[string(date)] = 1
 		} else {
-			p.MessagesByMonth[string(date)]++
+			p.MonthMap[string(date)]++
 		}
+
+		// Set prevParticipant in case of multi line messages
+		prevParticipant = string(sender)
 
 		// Add participant data to map
 		participants[string(sender)] = p
@@ -70,10 +104,13 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 	}
 
 	r.Participants = participants
-	r.MessagesByHour = messagesByHour
+	r.HourMap = hourMap
 
-	// Create Wordlist from WordMap
-	a.generateWordlist(r)
+	// Create Wordlist and Monthlist from maps
+	a.generateLists(r)
+
+
+
 
 	return r, nil
 }
@@ -88,7 +125,6 @@ func wordMap(p *report.ParticipantAnalytics, message []byte) {
 		if _, ok := stopwords[word]; !ok {
 			_, ok := p.WordMap[word]
 			if !ok {
-				//p.WordMap[word] = report.Word{Word: word, Usage: 1}
 				p.WordMap[word] = 1
 			} else {
 				p.WordMap[word]++
@@ -97,39 +133,79 @@ func wordMap(p *report.ParticipantAnalytics, message []byte) {
 	}
 }
 
-// generateWordList sorts the participant Wordmap and generates a WordList from the top 100 most used words
-func (a *analyzer) generateWordlist(r *report.ChatAnalytics) {
+// Generate lists converts the maps into sorted lists
+func (a *analyzer) generateLists(r *report.ChatAnalytics) {
+	hl := make(report.Hourlist, len(r.HourMap))
+	h := 0
+
+	for k, v := range r.HourMap {
+		hl[h] = report.Hour{Hour:k, Messages: v}
+		h++
+	}
+	sort.Sort(hl)
+
+	r.HourList = hl
+
 	for k, p := range r.Participants {
 		wl := make(report.Wordlist, len(p.WordMap))
+		ml := make(report.Monthlist, len(p.MonthMap))
 
-		i := 0
+		w := 0
 		for k, v := range p.WordMap {
-			wl[i] = report.Word{Word: k, Usage: v}
-			i++
+			wl[w] = report.Word{Word: k, Usage: v}
+			w++
 		}
 
+		m := 0
+		for k, v := range p.MonthMap {
+			ml[m] = report.Month{Month:k, Messages:v}
+			m++
+		}
+
+		// Sort the lists
 		sort.Sort(wl)
+		sort.Sort(ml)
+
+
+
+		// Assign lists to the participant
 		if len(wl) > 100 {
 			p.WordList = wl[:100] // Get 100 most used words!
-			break
+		} else {
+			p.WordList = wl
 		}
-		p.WordList = wl[:len(wl)-1]
+
+		p.MonthList = ml
+
+
 
 
 		// Create temp variable to assign to participant map
 		temp := r.Participants[k]
 		temp.WordList = p.WordList
+		temp.MonthList = p.MonthList
 
 		r.Participants[k] = temp
 	}
-
 }
+
+
 
 // clean message is our mapping func to remove punctuation marks
 func cleanMessage(r rune) rune {
 	switch {
-	case r == '\'' || r == ',' || r == '.' || r == '!' || r == '"':
+	case r =='\'' ||   r == ',' || r == '.' || r == '!' || r == '"' || r == '>' || r == '<' || r == '?' || r == '(' || r == ')' || r == ':' || unicode.IsDigit(r):
 		return -1
 	}
 	return r
+}
+
+// This strips any non printable runes. IOS exports were causing issues with LRM marks
+func stripCtlAndExtFromUTF8(str string) string {
+	return strings.Map(func(r rune) rune {
+		if unicode.IsPrint(r) {
+			return r
+		}
+		return -1
+	}, str)
 }

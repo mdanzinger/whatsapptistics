@@ -211,3 +211,6 @@ fabric.properties
 # End of https://www.gitignore.io/api/node,webstorm,phpstorm
 
 resource/_chat.txt
+resource/_chat-android.txt
+resource/_chat-ios.txt
+

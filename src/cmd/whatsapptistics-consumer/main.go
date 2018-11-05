@@ -1,10 +1,16 @@
 package main
 
 import (
-	"github.com/mdanzinger/whatsapptistics/analyzer"
+	"github.com/mdanzinger/whatsapptistics/src/analyzer"
+	"github.com/mdanzinger/whatsapptistics/src/store/dynamodb"
+	"github.com/mdanzinger/whatsapptistics/src/store/redis"
 	"log"
 )
 
 func main() {
-	a := analyzer.NewAnalyzerService(nil, log.Logger{})
+	rc := redis.NewReportCacheRepo()
+	rp := dynamodb.NewReportRepo(rc)
+	a := analyzer.NewAnalyzerService(rp, &log.Logger{})
+
+
 }

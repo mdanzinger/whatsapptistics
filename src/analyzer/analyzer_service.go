@@ -17,7 +17,9 @@ type ChatAnalyzer interface {
 type analyzerService struct {
 	repo   report.ReportRepository
 	logger *log.Logger
+	poller report.Poller
 }
+
 
 // AnalyzeAndStore analyzes the chat and stores the report in an injected repo
 func (as *analyzerService) AnalyzeAndStore(c *chat.Chat) error {
@@ -48,10 +50,14 @@ func (as *analyzerService) AnalyzeAndStore(c *chat.Chat) error {
 	return nil
 }
 
+
+
+
 // NewAnalyzerService returns an instance of an analyzer service
-func NewAnalyzerService(r report.ReportRepository, logger *log.Logger) *analyzerService {
+func NewAnalyzerService(repo report.ReportRepository, logger *log.Logger, poller report.Poller) *analyzerService {
 	return &analyzerService{
-		repo:   r,
+		repo:   repo,
 		logger: logger,
+		poller: poller,
 	}
 }

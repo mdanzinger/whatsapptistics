@@ -11,11 +11,11 @@ import (
 
 func TestAnalyzer_Analyze(t *testing.T) {
 	a := analyzer{
-		//parser: &androidParser{},
-		parser: &iosParser{},
+		parser: &androidParser{},
+		//parser: &iosParser{},
 	}
-	//android_chat, err := ioutil.ReadFile("../../resource/android_testchat.txt")
-	androidChat, err := ioutil.ReadFile("../../resource/_chat-ios.txt")
+	androidChat, err := ioutil.ReadFile("../../resource/android_testchat.txt")
+	//androidChat, err := ioutil.ReadFile("../../resource/_chat-ios.txt")
 
 	if err != nil {
 		t.Errorf("Error opening up android test chat")

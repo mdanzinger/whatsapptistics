@@ -1,8 +1,6 @@
 package report
 
 import (
-	"github.com/mdanzinger/whatsapptistics/src/chat"
-	"log"
 	"sync"
 )
 
@@ -11,39 +9,15 @@ const (
 	MAX_CONCURRENT = 10
 )
 
-
 // chatID represents an ID of a chat that's queued to be analyzed
-type chatID string
+//type chatID string
 
-
-// Poller is an interface for polling against some service and returning a slice of chat id's
-// to be analyzed
+// Poller is an interface for polling from a queue, and sending a slice of chatIDs
+// to a supplied channel.
 type Poller interface {
-	Poll(chan []chatID) error
-}
-
-
-type pollService struct {
-	poller Poller
-	reportService ReportService
-	chatService chat.ChatService
-	log *log.Logger
-}
-
-func (ps *pollService) Start() {
-	// Make channel to retrieve chat ids
-	chatIDs := make(chan []chatID)
-	semaphore := make(chan int, MAX_CONCURRENT)
-
-	if err := ps.poller.Poll(chatIDs); err != nil {
-		ps.log.Println("Error polling: ", err)
-	}
-
-	for id := range chatIDs {
-
-	}
-
-
+	// Poll sends a slice of strings that represent chat IDS to a supplied channel, and waits for the
+	// waitgroup before continuing to poll.
+	Poll(chan []string, *sync.WaitGroup)
 }
 
 //package main

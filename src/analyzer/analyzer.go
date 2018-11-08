@@ -23,7 +23,6 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 
 	scanner := bufio.NewScanner(strings.NewReader(string(chat.Content)))
 
-
 	// We use this to store the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines the previous participant because some messages span multiple lines
 	var prevParticipant string
 
@@ -44,8 +43,6 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 			// check and add words to wordmap
 			wordMap(&p, []byte(line))
 
-
-
 			participants[prevParticipant] = p
 
 			continue
@@ -56,8 +53,6 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 		hour := a.parser.Hour(line)
 		message := a.parser.Message(line)
 		sender := a.parser.Sender(line)
-
-
 
 		// increase message and word count
 		r.MessagesSent++
@@ -109,9 +104,6 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 	// Create Wordlist and Monthlist from maps
 	a.generateLists(r)
 
-
-
-
 	return r, nil
 }
 
@@ -139,7 +131,7 @@ func (a *analyzer) generateLists(r *report.ChatAnalytics) {
 	h := 0
 
 	for k, v := range r.HourMap {
-		hl[h] = report.Hour{Hour:k, Messages: v}
+		hl[h] = report.Hour{Hour: k, Messages: v}
 		h++
 	}
 	sort.Sort(hl)
@@ -158,15 +150,13 @@ func (a *analyzer) generateLists(r *report.ChatAnalytics) {
 
 		m := 0
 		for k, v := range p.MonthMap {
-			ml[m] = report.Month{Month:k, Messages:v}
+			ml[m] = report.Month{Month: k, Messages: v}
 			m++
 		}
 
 		// Sort the lists
 		sort.Sort(wl)
 		sort.Sort(ml)
-
-
 
 		// Assign lists to the participant
 		if len(wl) > 100 {
@@ -177,9 +167,6 @@ func (a *analyzer) generateLists(r *report.ChatAnalytics) {
 
 		p.MonthList = ml
 
-
-
-
 		// Create temp variable to assign to participant map
 		temp := r.Participants[k]
 		temp.WordList = p.WordList
@@ -189,12 +176,10 @@ func (a *analyzer) generateLists(r *report.ChatAnalytics) {
 	}
 }
 
-
-
 // clean message is our mapping func to remove punctuation marks
 func cleanMessage(r rune) rune {
 	switch {
-	case r =='\'' ||   r == ',' || r == '.' || r == '!' || r == '"' || r == '>' || r == '<' || r == '?' || r == '(' || r == ')' || r == ':' || unicode.IsDigit(r):
+	case r == '\'' || r == ',' || r == '.' || r == '!' || r == '"' || r == '>' || r == '<' || r == '?' || r == '(' || r == ')' || r == ':' || unicode.IsDigit(r):
 		return -1
 	}
 	return r

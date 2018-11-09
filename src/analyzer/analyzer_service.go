@@ -31,7 +31,7 @@ type analyzerService struct {
 func (as *analyzerService) Start() {
 	chatIDs := make(chan []string)
 	semaphore := make(chan int, MAX_CONCURRENT) // we use this to limit the amount of analyzers running
-	wg := &sync.WaitGroup{}
+	wg := &sync.WaitGroup{}  // we use this to prevent polling while chats jobs are still running
 
 	// Begin polling!
 	go as.poller.Poll(chatIDs, wg)
@@ -77,7 +77,6 @@ func (as *analyzerService) handler(id string, sem chan int, wg *sync.WaitGroup) 
 	// release waitgroup and semaphore
 	wg.Done()
 	<-sem
-
 }
 
 // analyze analyzes the supplied chat and returns a ChatAnalytics

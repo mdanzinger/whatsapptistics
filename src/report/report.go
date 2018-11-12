@@ -8,7 +8,6 @@ import (
 // Report represents an individual report
 type Report struct {
 	ReportID      string        `json:"ReportID"`
-	Email         string        `json:"email"`
 	ChatAnalytics ChatAnalytics `json:"report_analytics"`
 }
 

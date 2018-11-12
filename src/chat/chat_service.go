@@ -2,11 +2,13 @@ package chat
 
 import (
 	"context"
-	"github.com/nu7hatch/gouuid"
 	"io"
 	"io/ioutil"
 	"log"
 	"strings"
+
+	"github.com/mdanzinger/whatsapptistics/src/notify"
+	"github.com/nu7hatch/gouuid"
 )
 
 // ChatService represents a service for managing chat
@@ -17,6 +19,7 @@ type ChatService interface {
 
 type chatService struct {
 	cr     ChatRepository
+	n      notify.JobNotifier
 	logger *log.Logger
 }
 
@@ -42,10 +45,17 @@ func (cs *chatService) New(ctx context.Context, r io.Reader) error {
 		Content: cc,
 	}
 
+	// Upload to storage
 	if err = cs.cr.Upload(ctx, c); err != nil {
 		cs.logger.Print(err)
 		return err
 	}
+
+	// Notify of successful upload
+	if err = cs.n.JobNotify(cid); err != nil {
+		cs.logger.Println(err)
+	}
+
 	return nil
 }
 

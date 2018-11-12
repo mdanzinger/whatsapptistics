@@ -37,10 +37,10 @@ func TestAnalyzer_Analyze(t *testing.T) {
 	//}
 
 	// print chat for debugging
-	j, err := json.Marshal(r)
+	_, err = json.Marshal(r)
 	if err != nil {
 		fmt.Println("Could not marshal json")
 	}
 
-	fmt.Println(string(j))
+	//fmt.Println(string(j))
 }

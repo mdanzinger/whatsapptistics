@@ -7,7 +7,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     clean = require('gulp-clean'),
     concat = require('gulp-concat'),
-    notify = require('gulp-notify');
+    notify = require('gulp-job');
 
 // Copy files
 gulp.task('copy', function() {

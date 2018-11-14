@@ -1,13 +1,12 @@
 package analyzer
 
 import (
-	"fmt"
 	"io/ioutil"
 	"log"
 	"os"
-	"sync"
 	"testing"
-	"time"
+
+	"github.com/mdanzinger/whatsapptistics/src/job"
 
 	"github.com/mdanzinger/whatsapptistics/src/chat"
 
@@ -23,12 +22,12 @@ func TestAnalyzerService_Start(t *testing.T) {
 	// Inject mock services into analyzer service
 	var rs mock.ReportService
 	var cs mock.ChatService
-	var poller mock.Poller
+	var js mock.AnalyzeJobSource
 	var as analyzerService
 
 	as.rs = &rs
 	as.cs = &cs
-	as.poller = &poller
+	as.jobs = &js
 	as.logger = log.New(os.Stdout, "whatsapptistics: ", log.Lshortfile)
 
 	// Create mock funcs
@@ -38,17 +37,16 @@ func TestAnalyzerService_Start(t *testing.T) {
 		return nil
 	}
 
-	poller.PollFn = func(ch chan []string, wg *sync.WaitGroup) {
-		fmt.Println("Polling for messages from Mock Implementation")
-		time.Sleep(time.Millisecond * 500)
-		wg.Add(2)
-		ch <- []string{
-			"1159",
-			"1160",
+	jobIndex := 0
+	js.NextJobFn = func() (*job.AnalyzeJob, error) {
+		jobs := []job.AnalyzeJob{
+			{ChatID: "1159"},
+			{ChatID: "1160"},
 		}
-		wg.Wait()
-		close(ch)
-		poller.PollFnInvoked = true
+		js.NextJobFnInvoked = true
+		ji := jobIndex
+		jobIndex++
+		return &jobs[ji], nil
 	}
 
 	cs.RetrieveFn = func(id string) (*chat.Chat, error) {
@@ -74,17 +72,26 @@ func TestAnalyzerService_Start(t *testing.T) {
 			cs.RetrieveInvoked = true
 			return c, nil
 		}
-		t.Errorf("Exprect chat id to be either 1159 or 1170, got %s", id)
+		t.Fatalf("Exprect chat id to be either 1159 or 1160, got %s", id)
 		return nil, nil
 	}
-	as.Start()
+
+	// Mock Start Method
+	for i := 0; i < 2; i++ {
+		j, err := as.jobs.NextJob()
+
+		if err != nil {
+			as.logger.Printf("Error fetching next job: %v \n", err)
+		}
+		as.handler(j.ChatID)
+	}
 
 	if !rs.NewFuncInvoked {
 		t.Errorf("Expected New() to be Invoked")
 	}
 
-	if !poller.PollFnInvoked {
-		t.Errorf("Expected Poll() to be Invoked")
+	if !js.NextJobFnInvoked {
+		t.Errorf("Expected NextAnalyzeJobFn() to be Invoked")
 	}
 
 	if !cs.RetrieveInvoked {

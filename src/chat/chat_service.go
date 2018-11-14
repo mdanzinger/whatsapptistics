@@ -7,7 +7,8 @@ import (
 	"log"
 	"strings"
 
-	"github.com/mdanzinger/whatsapptistics/src/notify"
+	"github.com/mdanzinger/whatsapptistics/src/job"
+
 	"github.com/nu7hatch/gouuid"
 )
 
@@ -18,9 +19,9 @@ type ChatService interface {
 }
 
 type chatService struct {
-	cr     ChatRepository
-	n      notify.JobNotifier
-	logger *log.Logger
+	cr        ChatRepository
+	jobSource job.AnalyzeJobSource
+	logger    *log.Logger
 }
 
 // New creates a new Chat entity and uploads it to an injected storage repo
@@ -51,8 +52,9 @@ func (cs *chatService) New(ctx context.Context, r io.Reader) error {
 		return err
 	}
 
-	// Notify of successful upload
-	if err = cs.n.JobNotify(cid); err != nil {
+	// Create Analyze Job
+	j := &job.AnalyzeJob{ChatID: cid}
+	if err = cs.jobSource.QueueJob(j); err != nil {
 		cs.logger.Println(err)
 	}
 

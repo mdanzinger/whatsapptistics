@@ -4,12 +4,14 @@ import (
 	"log"
 	"sync"
 
+	"github.com/mdanzinger/whatsapptistics/src/job"
+
 	"github.com/mdanzinger/whatsapptistics/src/chat"
 	"github.com/mdanzinger/whatsapptistics/src/report"
 )
 
 const (
-	MAX_CONCURRENT = 10
+	MAX_CONCURRENT = 2
 )
 
 // ChatAnalyzer represents a chat analyzer
@@ -23,37 +25,33 @@ type analyzerService struct {
 	cs chat.ChatService
 
 	logger *log.Logger
-	poller report.Poller
+	jobs   job.AnalyzeJobSource
 }
 
 // Start starts and initializes the analyzer service. It will use the injected poller
 // to poll and get chats from an message queue
 func (as *analyzerService) Start() {
-	chatIDs := make(chan []string)
-	semaphore := make(chan int, MAX_CONCURRENT) // we use this to limit the amount of analyzers running
-	wg := &sync.WaitGroup{}                     // we use this to prevent polling while chats jobs are still running
+	wg := &sync.WaitGroup{}
+	for {
+		for i := 0; i < MAX_CONCURRENT; i++ {
+			j, err := as.jobs.NextJob()
 
-	// Begin polling!
-	go as.poller.Poll(chatIDs, wg)
+			if err != nil {
+				as.logger.Printf("Error fetching next job: %v \n", err)
+			}
 
-	//Listen on supplied channels for a slice of ids to come in
-	for sliceIDs := range chatIDs {
-		for _, id := range sliceIDs {
-			go as.handler(id, semaphore, wg)
-			//go func(id string, sem chan int, wg *sync.WaitGroup) {
-			//	sem <- 1
-			//	fmt.Println("Handled Chat")
-			//	wg.Done()
-			//	<-sem
-			//}(id, semaphore, wg)
+			wg.Add(1)
+			go func() {
+				as.handler(j.ChatID)
+				wg.Done()
+			}()
 		}
+		wg.Wait()
 	}
-
 }
 
 // handler gets chat from an injected chatService and starts the analyzer
-func (as *analyzerService) handler(id string, sem chan int, wg *sync.WaitGroup) {
-	sem <- 1 // Pass value to semaphore
+func (as *analyzerService) handler(id string) {
 	as.logger.Printf("Handling chat %s \n", id)
 
 	// Download chat
@@ -79,10 +77,6 @@ func (as *analyzerService) handler(id string, sem chan int, wg *sync.WaitGroup) 
 	if err != nil {
 		as.logger.Printf("Error storing report: %v \n", err)
 	}
-
-	// release waitgroup and semaphore
-	wg.Done()
-	<-sem
 }
 
 // analyze analyzes the supplied chat and returns a ChatAnalytics
@@ -106,11 +100,11 @@ func (as *analyzerService) analyze(c *chat.Chat) (*report.ChatAnalytics, error) 
 }
 
 // NewAnalyzerService returns an instance of an analyzer service
-func NewAnalyzerService(rs report.ReportService, cs chat.ChatService, logger *log.Logger, poller report.Poller) *analyzerService {
+func NewAnalyzerService(rs report.ReportService, cs chat.ChatService, logger *log.Logger, jobSource job.AnalyzeJobSource) *analyzerService {
 	return &analyzerService{
 		rs:     rs,
 		cs:     cs,
 		logger: logger,
-		poller: poller,
+		jobs:   jobSource,
 	}
 }

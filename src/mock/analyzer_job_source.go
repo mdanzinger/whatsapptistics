@@ -6,24 +6,24 @@ import (
 
 // Poller represents a mock implementation of report.Poller
 type AnalyzeJobSource struct {
-	NextJobFn        func() (*job.AnalyzeJob, error)
+	NextJobFn        func() (*job.Chat, error)
 	NextJobFnInvoked bool
 
-	QueueJobFn        func(*job.AnalyzeJob) error
+	QueueJobFn        func(*job.Chat) error
 	QueueJobFnInvoked bool
 
 	// some queue services return a batch of messages, so currentBatch
 	// represents a batch of messages (jobs) that may have been returned
-	currentBatch []job.AnalyzeJob
+	currentBatch []job.Chat
 }
 
 // Poll implements the Poll method of our mock Poller
-func (js *AnalyzeJobSource) NextJob() (*job.AnalyzeJob, error) {
+func (js *AnalyzeJobSource) NextJob() (*job.Chat, error) {
 	js.NextJobFnInvoked = true
 	return js.NextJobFn()
 }
 
-func (js *AnalyzeJobSource) QueueJob(analyzeJob *job.AnalyzeJob) error {
+func (js AnalyzeJobSource) QueueJob(analyzeJob *job.Chat) error {
 	js.QueueJobFnInvoked = true
 	return js.QueueJobFn(analyzeJob)
 }

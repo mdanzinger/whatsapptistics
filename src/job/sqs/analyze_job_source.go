@@ -1,6 +1,8 @@
 package sqs
 
 import (
+	"encoding/json"
+	"fmt"
 	"log"
 
 	"github.com/mdanzinger/whatsapptistics/src/job"
@@ -29,42 +31,63 @@ var (
 	}
 )
 
-type analyzeJobSource struct {
+type sqsSource struct {
 	sqs       *sqs.SQS
-	snsQueuer sns.SnsQueuer // we used SNS to indirectly add items to queue.
+	snsQueuer *sns.SnsQueuer // we used SNS to indirectly add items to queue.
 	logger    *log.Logger
+
+	currentBatch []job.Chat
 }
 
-func (js *analyzeJobSource) NextJob() (j *job.AnalyzeJob, err error) {
-	for {
-		resp, err := rp.sqs.ReceiveMessage(params)
-		if err != nil {
-			log.Println(err)
-			continue
+func (s *sqsSource) NextJob() (j *job.Chat, err error) {
+	if len(s.currentBatch) == 0 {
+		// No messages in current batch, need to poll for more.
+		// Once we have a set of messages, we store them in
+		// s.currentBatch.
+		for {
+			fmt.Println("Polling SQS for messages...")
+			resp, err := s.sqs.ReceiveMessage(params)
+			if err != nil {
+				log.Println(err)
+			}
+
+			// Loop through messages returned, add to batch
+			if len(resp.Messages) > 0 {
+				fmt.Printf("Got %v messages! \n", len(resp.Messages))
+				for _, m := range resp.Messages {
+					// Extract body from message
+					mjson := message{}
+					// Unmarshal body to get message
+					err := json.Unmarshal([]byte(*m.Body), &mjson)
+					if err != nil {
+						return nil, err
+					}
+					// unmarshal message to get job
+					cj := job.Chat{}
+					err = json.Unmarshal([]byte(mjson.Message), &cj)
+					if err != nil {
+						return nil, err
+					}
+					s.currentBatch = append(s.currentBatch, cj)
+					// Break out of our loop!
+				}
+				break
+			}
 		}
-		if len(resp.Messages) > 0 {
-			//wg.Add(len(resp.Messages))
-			////c <- []string{"chat 1", "chat 2", "chat 3", "chat 4", "chat 5", "chat 6", "chat 7", "chat 8", "chat 9", "chat 10"}
-			//for _, m := range resp.Messages {
-			//	fmt.Print("RECEIVED MESSAGE:")
-			//	fmt.Println(*m.Body)
-			//	fmt.Println(m.Attributes)
-			//
-			//	if err := json.Unmarshal([]byte(*m.Body), &mb); err != nil {
-			//		fmt.Println(err)
-			//	}
-			//	if err := json.Unmarshal([]byte(mb.Message), &e); err != nil {
-			//		fmt.Println(err)
-			//	}
-			//	fmt.Println(e)
-			//}
-			//wg.Wait()
-		}
+	} else {
+		fmt.Println("Found in local cache")
 	}
+	job := s.currentBatch[0]
+	s.currentBatch = s.currentBatch[1:]
+	return &job, nil
+}
+
+func (s *sqsSource) QueueJob(j *job.Chat) error {
+	return s.snsQueuer.QueueJob(j)
 }
 
 // NewReportPoller returns an SQS implementation of a report poller
-func NewAnalyzeJobSource(l *log.Logger) *analyzeJobSource {
+func NewAnalyzeJobSource(l *log.Logger) *sqsSource {
 	sess, err := session.NewSession()
 	if err != nil {
 		log.Printf("Error creating session -> %s \n", err)
@@ -72,9 +95,9 @@ func NewAnalyzeJobSource(l *log.Logger) *analyzeJobSource {
 
 	q := sqs.New(sess)
 
-	return &analyzeJobSource{
+	return &sqsSource{
 		sqs:       q,
-		snsQueuer: sns.SnsQueuer{},
+		snsQueuer: sns.NewSnsQueuer(),
 		logger:    l,
 	}
 }

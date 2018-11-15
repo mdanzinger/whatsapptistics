@@ -38,8 +38,8 @@ func TestAnalyzerService_Start(t *testing.T) {
 	}
 
 	jobIndex := 0
-	js.NextJobFn = func() (*job.AnalyzeJob, error) {
-		jobs := []job.AnalyzeJob{
+	js.NextJobFn = func() (*job.Chat, error) {
+		jobs := []job.Chat{
 			{ChatID: "1159"},
 			{ChatID: "1160"},
 		}

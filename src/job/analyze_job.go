@@ -1,13 +1,13 @@
 package job
 
-// AnalyzeJob represents a chat that needs to be analyzed and created into a report
-type AnalyzeJob struct {
+// Chat represents a chat that needs to be analyzed and created into a report
+type Chat struct {
 	ChatID        string
 	UploaderEmail string
 }
 
-//AnalyzeJobSource represents a queue of jobs
-type AnalyzeJobSource interface {
-	QueueJob(job *AnalyzeJob) error
-	NextJob() (*AnalyzeJob, error)
+// Source represents a queue of chats that need to be analyzed
+type Source interface {
+	QueueJob(*Chat) error
+	NextJob() (*Chat, error)
 }

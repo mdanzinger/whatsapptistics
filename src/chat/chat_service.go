@@ -20,7 +20,7 @@ type ChatService interface {
 
 type chatService struct {
 	cr        ChatRepository
-	jobSource job.AnalyzeJobSource
+	jobSource job.Source
 	logger    *log.Logger
 }
 
@@ -53,7 +53,7 @@ func (cs *chatService) New(ctx context.Context, r io.Reader) error {
 	}
 
 	// Create Analyze Job
-	j := &job.AnalyzeJob{ChatID: cid}
+	j := &job.Chat{ChatID: cid}
 	if err = cs.jobSource.QueueJob(j); err != nil {
 		cs.logger.Println(err)
 	}

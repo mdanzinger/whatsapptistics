@@ -1,12 +1,36 @@
 package sqs
 
 import (
+	"fmt"
 	"testing"
-
-	"github.com/mdanzinger/whatsapptistics/src/job"
+	"time"
 )
 
 func TestNewAnalyzeJobSource(t *testing.T) {
 	b := NewAnalyzeJobSource(nil)
-	var _ job.AnalyzeJobSource = (*b)(nil)
+	//for i := 0; i < 10; i++ {
+	//	testchat := job.Chat{
+	//		ChatID: []string{"1159-" + strconv.Itoa(i), "1160-" + strconv.Itoa(i)}[rand.Intn(2)],
+	//	}
+	//	err := b.QueueJob(&testchat)
+	//	if err != nil {
+	//		t.Error(err)
+	//	}
+	//}
+
+	time.Sleep(time.Second * 2)
+
+	for i := 0; i < 11; i++ {
+		j, err := b.NextJob()
+		if err != nil {
+			t.Error(err)
+		}
+		fmt.Println(j.ChatID)
+	}
+
+	//j2, err := b.NextJob()
+	//if err != nil {
+	//	t.Error(err)
+	//}
+	//fmt.Println(j2.ChatID)
 }

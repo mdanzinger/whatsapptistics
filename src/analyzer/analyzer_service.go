@@ -25,7 +25,7 @@ type analyzerService struct {
 	cs chat.ChatService
 
 	logger *log.Logger
-	jobs   job.AnalyzeJobSource
+	jobs   job.Source
 }
 
 // Start starts and initializes the analyzer service. It will use the injected poller
@@ -100,7 +100,7 @@ func (as *analyzerService) analyze(c *chat.Chat) (*report.ChatAnalytics, error) 
 }
 
 // NewAnalyzerService returns an instance of an analyzer service
-func NewAnalyzerService(rs report.ReportService, cs chat.ChatService, logger *log.Logger, jobSource job.AnalyzeJobSource) *analyzerService {
+func NewAnalyzerService(rs report.ReportService, cs chat.ChatService, logger *log.Logger, jobSource job.Source) *analyzerService {
 	return &analyzerService{
 		rs:     rs,
 		cs:     cs,

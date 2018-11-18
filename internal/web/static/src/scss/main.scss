@@ -1,3 +1,4 @@
-body {
-    background: red;
-}
+@import "common/variables";
+@import "common/btn";
+@import "pages/home";
+@import "common/norm";

@@ -6,10 +6,31 @@
     <meta name="viewport"
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
+    <title>Whatsapptistics - WhatsApp analyzer and visualizer </title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
-<h1>Chat Upload:</h1>
+<header>
+    <div class="logo">
+        <img src="https://s3.amazonaws.com/whatsapptastics-assets/whatsapptistics-logo.png" alt="">
+    </div>
+    <a href="#" class="btn btn--cta">New Report</a>
+</header>
+<section class="hero">
+    <div class="hero__content">
+        <div class="hero__content-headings">
+            <h1>
+                Personalized <span>WhatsApp</span> visualizations
+            </h1>
+            <h2>Whatsapptistics analyzes your whatsapp chats to generate a unique, visual report.</h2>
+        </div>
+
+    </div>
+</section>
+<section class="faq">
+
+</section>
 <form action="/report" method="post" enctype="multipart/form-data">
     Select image to upload:
     <input type="file" name="chat" id="file">

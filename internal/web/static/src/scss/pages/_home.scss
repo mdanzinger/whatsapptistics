@@ -1,0 +1,94 @@
+body {
+   background: #f0f0f0;
+    color: white;
+    font-family: $font;
+  }
+
+header {
+  display: flex;
+  align-content: center;
+  justify-content: space-between;
+  // max-width: 90%;
+  padding: 10px 5%;
+  margin: auto;
+  position: sticky;
+  top: 0;
+  background: #f0f0f0;
+
+  z-index: 5;
+
+  @media (max-width: 767px){
+    flex-wrap: wrap;
+    text-align: center;
+  }
+
+  .logo {
+    @media (max-width: 767px){
+        width: 100%;
+    }
+    img {
+        max-width:: 150px;;
+      @media (max-width: 767px){
+        max-width:: 200px;;
+      }
+    }
+  }
+  .btn {
+    align-self: center;
+    @media (max-width: 767px){
+      margin: 15px auto 0;
+    }
+  }
+}
+
+
+.hero {
+  background-image: url(https://s3.amazonaws.com/whatsapptastics-assets/hero.jpg);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  height: 600px;
+  overflow: hidden;
+  @media (max-width: 767px) {
+    height: 300px;
+  }
+  &:after {
+      content: '';
+      display: block;
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      width: 100%;
+      background: rgba(0,0,0,0.6);
+  }
+
+  .hero__content {
+    display: flex;
+    height: 100%;
+    align-content: center;
+    align-self: center;
+    width: 90%;
+    margin: auto;
+    position: relative;
+    z-index: 3;
+    flex-wrap: wrap;
+    h1 {
+      color: white;
+      align-self: center;
+      font-size: 46px;
+      width: 100%;
+      @media (max-width: 767px){
+        font-size: 30px;
+        max-width: 100%;
+      }
+      span {
+        color: #2be460;
+        text-transform: uppercase;
+        font-weight: 800;
+      }
+    }
+  }
+}
+.faq {
+  height: 100vh;
+}

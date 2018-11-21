@@ -1,6 +1,6 @@
 body {
-   background: #f0f0f0;
-    color: white;
+   background: #white;
+    //color: white;
     font-family: $font;
   }
 
@@ -20,6 +20,7 @@ header {
   @media (max-width: 767px){
     flex-wrap: wrap;
     text-align: center;
+    justify-content: center;
   }
 
   .logo {
@@ -27,16 +28,21 @@ header {
         width: 100%;
     }
     img {
-        max-width:: 150px;;
+        max-width: 150px;
       @media (max-width: 767px){
-        max-width:: 200px;;
+        max-width: 200px;
       }
     }
   }
+  .btns {
+    align-self: center;
+  }
   .btn {
     align-self: center;
+    margin: 0 20px;
     @media (max-width: 767px){
-      margin: 15px auto 0;
+      margin: 15px auto 10px;
+      display: block;
     }
   }
 }
@@ -49,6 +55,7 @@ header {
   position: relative;
   height: 600px;
   overflow: hidden;
+  color: white;
   @media (max-width: 767px) {
     height: 300px;
   }
@@ -72,6 +79,7 @@ header {
     position: relative;
     z-index: 3;
     flex-wrap: wrap;
+
     h1 {
       color: white;
       align-self: center;
@@ -89,6 +97,85 @@ header {
     }
   }
 }
+.bs {
+  .bs-container {
+    display: flex;
+    color: black;
+    max-width: 1200px;
+    margin: auto;
+    padding: 60px 0;
+    @media (max-width: 767px) {
+      flex-wrap: wrap;
+    }
+    .bs__text {
+      flex: 0 0 50%;
+      font-size: 20px;
+      align-self: center;
+      text-align: center;
+      @media (max-width: 767px) {
+        flex: 0 1 100%;
+        padding: 20px;
+      }
+    }
+    sub {
+      font-size: 6px;
+    }
+  }
+}
 .faq {
-  height: 100vh;
+  height: 40vh;
+  background: $offset-color;
+  padding: 40px 0;
+  .faq-container {
+    width: 90%;
+    margin: auto;
+  }
+  .faq-title {
+    margin: 0;
+    padding: 40px 0 20px;
+    font-size: 84px;
+  }
+  .faq-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .faq-cell {
+      flex: 0 1 calc(33% - 10px);
+      background: white;
+      margin-bottom: 40px;
+      @media (max-width: 767px) {
+        flex: 0 1 100%;
+        margin-bottom: 20px;
+      }
+      .faq-cell-inner {
+        padding: 20px;
+      }
+      .faq-question {
+        &:before {
+          content: 'Q.';
+          font-size: 18px;
+          padding: 0 15px 0 0;
+          color: #8a9ee9;
+          font-weight: 800;
+        }
+        &:after {
+          content: '';
+          display: block;
+          background: #8a9ee9;
+          height: 8px;
+          margin: 15px -20px;
+        }
+      }
+        .faq-answer {
+          &:before {
+            content: 'A.';
+            font-size: 18px;
+            padding: 0 15px 0 0;
+            color: #8a9ee9;
+            font-weight: 800;
+          }
+      }
+    }
+  }
 }

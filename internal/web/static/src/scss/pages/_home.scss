@@ -123,22 +123,30 @@ header {
   }
 }
 .faq {
-  height: 40vh;
   background: $offset-color;
-  padding: 40px 0;
+  padding: 80px 0 40px 0;
   .faq-container {
     width: 90%;
     margin: auto;
   }
   .faq-title {
     margin: 0;
-    padding: 40px 0 20px;
+    padding: 0;
     font-size: 84px;
+    color: white;
+    line-height: 1;
+  }
+  hr {
+    margin: 30px 0;
+    border-width: 4px;
+    border-color: white;
+    border-style: solid;
   }
   .faq-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
+    color: #393939;
 
     .faq-cell {
       flex: 0 1 calc(33% - 10px);
@@ -168,6 +176,9 @@ header {
         }
       }
         .faq-answer {
+          a, a:visited {
+            color: $offset-color;
+          }
           &:before {
             content: 'A.';
             font-size: 18px;
@@ -178,4 +189,96 @@ header {
       }
     }
   }
+
 }
+
+#report-modal {
+  .modal-wrapper {
+    padding: 20px;
+    text-align: center;
+  }
+  .upload-btn-wrapper {
+    position: relative;
+    overflow: hidden;
+    display: inline-block;
+
+    .btn--fill {
+      background: $primary-color;
+      color: white;
+    }
+  }
+
+  .btn--submit {
+    //border: 2px solid gray;
+    //color: gray;
+    //background-color: white;
+    //padding: 8px 20px;
+    //border-radius: 8px;
+    //font-size: 20px;
+    //font-weight: bold;
+    background: $primary-color;
+    color: white;
+    padding: 8px 40px 8px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    &:before {
+      content: '';
+      background: url(https://s3.amazonaws.com/whatsapptastics-assets/send_white_192x192.png);
+      display: inline-block;
+      height: 20px;
+      width: 20px;
+      background-size: cover;
+      background-position: center center;
+      position: absolute;
+      right: 10px;
+    }
+  }
+  
+  .input {
+    display: block;
+    max-width: 300px;
+    margin: 10px auto;
+    padding: 8px;
+    box-sizing: border-box;
+    border: 2px solid #3f5fd1;
+    color: #3f5fd1;
+    text-align: center;
+    width: 100%;
+    &::placeholder {
+      color: #3f5fd1;
+    }
+  }
+  
+
+  .upload-btn-wrapper input[type=file] {
+    font-size: 100px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    opacity: 0;
+  }
+  .btn--submit {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .modal-note {
+    font-size: 14px;
+  }
+}
+
+ footer {
+    display: flex;
+    width: 90%;
+    justify-content: space-between;
+    margin: auto;
+    padding: 10px 0;
+    font-size: 12px;
+    color: #393939;
+   align-items: center;
+    img {
+      max-height: 20px;
+    }
+  }

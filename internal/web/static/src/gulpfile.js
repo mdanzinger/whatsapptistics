@@ -33,7 +33,7 @@ gulp.task('styles', function() {
 // Scripts
 gulp.task('scripts', function() {
     return gulp.src(['js/*.js','!src/js/vendor/**/*.js'])
-        .pipe(concat('main.js'))
+        .pipe(concat('app.js'))
         .pipe(gulp.dest('../dist/js'))
         .pipe(rename(function (dir, base, ext) {
             return base + ".min" + ext;

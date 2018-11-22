@@ -8,6 +8,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Whatsapptistics - WhatsApp analyzer and visualizer </title>
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
     <link rel="stylesheet" href="/static/css/main.css">
 </head>
 <body>
@@ -16,7 +17,7 @@
         <img src="https://s3.amazonaws.com/whatsapptastics-assets/whatsapptistics-logo.png" alt="">
     </div>
     <div class="btns">
-        <a href="#" class="btn btn--cta">Generate Report</a>
+        <a href="#" class="btn btn--cta"data-izimodal-open="#report-modal" data-izimodal-transitionin="fadeInDown">Generate Report</a>
         <a href="https://github.com/mdanzinger/whatsapptistics" target="_blank" class="link">View Source</a>
     </div>
 
@@ -47,43 +48,86 @@
 
 <section class="faq">
     <div class="faq-container">
-        {{/*<h2 class="faq-title">FAQ</h2>*/}}
-        {{/*<hr>*/}}
+        <h2 class="faq-title">FAQ</h2>
+        <hr>
         <div class="faq-grid">
             <div class="faq-cell">
                 <div class="faq-cell-inner">
                     <div class="faq-question">How do I use this?</div>
-                    <div class="faq-answer">Wellll</div>
+                    <div class="faq-answer">Simply <a href="https://www.zapptales.com/en/how-to-export-whatsapp-chat-android-iphone-ios/">export your chat</a> without media,
+                    press the "generate report" button in the top right corner, enter your email to be notified when the analysis is complete, and choose the exported <code>.txt</code> chat file to upload.
+                    </div>
                 </div>
             </div>
             <div class="faq-cell">
                 <div class="faq-cell-inner">
                 <div class="faq-question">What happens to my data?</div>
-                <div class="faq-answer">Wellll</div>
+                <div class="faq-answer">Once your chat is uploaded, it gets stored on secure s3 buckets until our analyzer processes and analyzes your chat from a queue.
+                The s3 bucket is configured to automatically delete chats after 1 week.</div>
                 </div>
             </div>
             <div class="faq-cell">
                 <div class="faq-cell-inner">
-                <div class="faq-question">Why should I trust you?</div>
-                <div class="faq-answer">Wellll</div>
+                <div class="faq-question">Why should I trust you with my sensitive chats?</div>
+                    <div class="faq-answer">You shouldn't! That's why I've completely <a href="http://github.com/mdanzinger/whatsapptistics" target="_blank">
+                        open sourced the code</a>, and am working on a simple CLI tool that will generate reports offline for you. </div>
                 </div>
             </div>
             <div class="faq-cell">
                 <div class="faq-cell-inner">
                     <div class="faq-question">Why does this website look so bad?</div>
-                    <div class="faq-answer">Wellll</div>
+                    <div class="faq-answer">This often happens when left to my own creativity. If you've got any feedback, feel free to create
+                        an issue on <a href="http://github.com/mdanzinger/whatsapptistics/issues/new">github</a>.</div>
+                </div>
+            </div>
+            <div class="faq-cell">
+                <div class="faq-cell-inner">
+                    <div class="faq-question">This doesn't work with my phone!</div>
+                    <div class="faq-answer">The analyzer was built to support standard, and group chats from both IOS and Android. If for whatever reason
+                    the analyzer fails, please create a <a href="http://github.com/mdanzinger/whatsapptistics/issues/new">github</a> issue and I'll try my best to get it fixed.</div>
+                </div>
+            </div>
+            <div class="faq-cell">
+                <div class="faq-cell-inner">
+                    <div class="faq-question">I wish this did X...</div>
+                    <div class="faq-answer">I'm open to suggestions! If enough people request a certain feature, I'll definitely consider implementing it.</div>
+                </div>
+            </div>
+            <div class="faq-cell">
+                <div class="faq-cell-inner">
+                    <div class="faq-question">What technology was used to build this?</div>
+                    <div class="faq-answer">The backend is split into two services, one service handles chat uploads and serves reports (and this page!), and the
+                    second service performs "analyze jobs" off of a queue. Both components were developed with Go, and are making use of Amazon's SQS to queue jobs, S3 to store chats,
+                        DynamoDB to store reports, and Redis to cache reports. The backend is deployed to a docker swarm cluster with a few replicas of the analyzer.</div>
                 </div>
             </div>
         </div>
     </div>
-
 </section>
-<form action="/report" method="post" enctype="multipart/form-data">
-    Select image to upload:
-    <input type="file" name="chat" id="file">
-    <input type="text" name="email" id="email">
-    <input type="submit" value="Upload Image" name="submit">
-</form>`
+<footer>
+    <div class="left">
+        <img src="https://s3.amazonaws.com/whatsapptastics-assets/whatsapptistics-logo.png" alt="">
+    </div>
+    <div class="right">Developed by Mendy Danzinger</div>
+</footer>
+<div class="izimodal" id="report-modal">
+    <div class="modal-wrapper">
+        <h3 class="modal-title">Simple as 1-2-3.</h3>
+        <form action="/report" method="post" enctype="multipart/form-data">
+            <div class="upload-btn-wrapper">
+                <button class="btn">1. Choose Chat File</button>
+                <input type="file" name="chat" />
+            </div>
+            <input type="text" name="email" id="email" class="input" placeholder="2. Enter email to be notified">
+            <a href="#" class="btn--submit">3. Upload</a>
+        </form>
+        <div class="modal-note">Note: it may take up to a few minutes to generate your report.</div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.min.js"></script>
+<script src="static/js/app.js"></script>
 </body>
 </html>
 {{end}}

@@ -4,3 +4,14 @@ $offset-color: #8A9EE9;
 
 
 $font: 'Lato', sans-serif;
+
+
+
+// Loader variables
+$brand-success: $primary-color;
+$loader-size: 7em;
+$check-height: $loader-size/2;
+$check-width: $check-height/2;
+$check-left: ($loader-size/6 + $loader-size/12);
+$check-thickness: 4px;
+$check-color: $brand-success;

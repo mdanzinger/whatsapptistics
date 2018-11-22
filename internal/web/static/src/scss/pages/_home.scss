@@ -14,7 +14,6 @@ header {
   position: sticky;
   top: 0;
   background: #f0f0f0;
-
   z-index: 5;
 
   @media (max-width: 767px){
@@ -266,6 +265,12 @@ header {
   }
   .modal-note {
     font-size: 14px;
+  }
+  .loading {
+    display: none;
+    &.show {
+      display: block;
+    }
   }
 }
 

@@ -84,7 +84,7 @@ func (as *analyzerService) handler(j *job.Chat) {
 	// Notify chat owner
 	if len(j.UploaderEmail) > 0 {
 		if err := as.emailNotifier.Notify(j.ChatID, j.UploaderEmail); err != nil {
-			as.logger.Fatalf("error sending notification to %s, got error: %v", j.UploaderEmail, err)
+			as.logger.Printf("error sending notification to %s, got error: %v \n", j.UploaderEmail, err)
 		}
 	}
 

@@ -24,8 +24,10 @@ func (s *reportRepo) Get(ctx context.Context, key string) (*report.Report, error
 
 	// Cache hit
 	if err == nil {
+		fmt.Printf("Serving report %s from cache \n", key)
 		return r, err
 	}
+	fmt.Println(err)
 
 	// Cache misses.. get report from db
 	result, err := s.db.GetItemWithContext(ctx, &dynamodb.GetItemInput{
@@ -55,6 +57,7 @@ func (s *reportRepo) Get(ctx context.Context, key string) (*report.Report, error
 		return report, err
 	}
 
+	fmt.Printf("Serving report %s from dynamodb \n", key)
 	return report, nil
 }
 

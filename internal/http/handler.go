@@ -1,11 +1,14 @@
 package http
 
 import (
+	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
 	"net/http"
 	"strings"
+
+	"github.com/gorilla/mux"
 
 	"github.com/mdanzinger/whatsapptistics/internal/job"
 
@@ -35,11 +38,24 @@ func (h *handler) serveIndex(w http.ResponseWriter, r *http.Request) {
 }
 
 func (h *handler) serveReport(w http.ResponseWriter, r *http.Request) {
-	err := h.templates.ExecuteTemplate(w, "index", nil)
+	vars := mux.Vars(r)
+	report, err := h.ReportService.Get(r.Context(), vars["id"])
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		http.Error(w, "Report failed :(", http.StatusBadRequest)
 		return
 	}
+	reportjson, err := json.Marshal(report)
+	if err != nil {
+		http.Error(w, "Report failed :(", http.StatusBadRequest)
+		return
+	}
+	fmt.Fprintf(w, "%s", reportjson)
+
+	//err := h.templates.ExecuteTemplate(w, "index", nil)
+	//if err != nil {
+	//	http.Error(w, err.Error(), http.StatusInternalServerError)
+	//	return
+	//}
 }
 
 func (h *handler) newReport(w http.ResponseWriter, r *http.Request) {

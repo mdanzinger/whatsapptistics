@@ -96,9 +96,9 @@
             <div class="faq-cell">
                 <div class="faq-cell-inner">
                     <div class="faq-question">What technology was used to build this?</div>
-                    <div class="faq-answer">The backend is split into two services, one service handles chat uploads and serves reports (and this page!), and the
-                    second service performs "analyze jobs" off of a queue. Both components were developed with Go, and are making use of Amazon's SQS to queue jobs, S3 to store chats,
-                        DynamoDB to store reports, and Redis to cache reports. The backend is deployed to a docker swarm cluster with a few replicas of the analyzer.</div>
+                    <div class="faq-answer">Whatsapptistics is built following an event-driven architecture pattern. There are two services powering this application. The first service is responsible for serving reports,
+                    handling chat uploads, creating "analyze jobs", and some rudimentary validations. The second service is what performs the actual analysis. It polls "analyze jobs" from a queue, performs the analysis,
+                    and stores reports in a database / cache. Technologies utilized for this process are: Go, SQS & SNS, S3, Dynamodb and Redis. </div>
                 </div>
             </div>
         </div>
@@ -116,11 +116,16 @@
         <form action="/report" method="post" enctype="multipart/form-data">
             <div class="upload-btn-wrapper">
                 <button class="btn">1. Choose Chat File</button>
-                <input type="file" name="chat" />
+                <input required type="file" name="chat" accept=".txt" />
             </div>
-            <input type="text" name="email" id="email" class="input" placeholder="2. Enter email to be notified">
-            <a href="#" class="btn--submit">3. Upload</a>
+            <input type="text" required name="email" id="email" class="input" placeholder="2. Enter email to be notified">
+            <a href="/" class="btn--submit">3. Upload</a>
         </form>
+        <div class="loading">
+            <div class="circle-loader">
+                <div class="checkmark draw"></div>
+            </div>
+        </div>
         <div class="modal-note">Note: it may take up to a few minutes to generate your report.</div>
     </div>
 </div>

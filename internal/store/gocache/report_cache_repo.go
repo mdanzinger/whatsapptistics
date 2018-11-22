@@ -15,16 +15,17 @@ type reportCacheRepo struct {
 }
 
 func (c reportCacheRepo) Get(ctx context.Context, id string) (*report.Report, error) {
-	r, found := c.cl.Get("foo")
+	r, found := c.cl.Get(id)
 	if found {
-		cachereport := r.(report.Report)
-		return &cachereport, nil
+		cachereport := r.(*report.Report)
+		return cachereport, nil
 	}
 	return nil, fmt.Errorf("gocache miss")
 }
 
 func (c reportCacheRepo) Store(r *report.Report) error {
-	c.cl.Set(r.ReportID, r, gocache.DefaultExpiration)
+	cp := r
+	c.cl.Set(r.ReportID, cp, gocache.DefaultExpiration)
 	return nil
 }
 

@@ -14,7 +14,7 @@ header {
   position: sticky;
   top: 0;
   background: #f0f0f0;
-  z-index: 5;
+  z-index: 10;
 
   @media (max-width: 767px){
     flex-wrap: wrap;
@@ -276,12 +276,11 @@ header {
 
  footer {
     display: flex;
-    width: 90%;
     justify-content: space-between;
     margin: auto;
-    padding: 10px 0;
+    padding: 10px 5%;
     font-size: 12px;
-    color: #393939;
+   color: #393939;
    align-items: center;
     img {
       max-height: 20px;

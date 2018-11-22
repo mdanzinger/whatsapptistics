@@ -1,0 +1,73 @@
+{{define "report"}}
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Whatsapptistics - WhatsApp analyzer and visualizer </title>
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script>
+        data = {{.}}
+    </script>
+</head>
+<body class="report-page">
+<header>
+    <div class="logo">
+        <img src="https://s3.amazonaws.com/whatsapptastics-assets/whatsapptistics-logo.png" alt="">
+    </div>
+    <div class="btns">
+        <a href="#" class="btn btn--cta"data-izimodal-open="#report-modal" data-izimodal-transitionin="fadeInDown">Generate Report</a>
+        <a href="https://github.com/mdanzinger/whatsapptistics" target="_blank" class="link">View Source</a>
+    </div>
+
+</header>
+
+<div class="report">
+    <div id="report_background"></div>
+    <div class="report__overview">
+        <h1 class="report__overview-title">Overview</h1>
+        A total of <span id="total_messages" class="count">23198</span> messages were sent, averaging <span id="total_messages_average" class="count">213</span> messages per day. <span id="busiest_hour">9:00 AM</span> appears to be the busiest hour, with an accumulative
+        <span id="hourly_messages" class="count">2907</span> messages sent during that hour.
+    </div>
+</div>
+
+
+<footer>
+    <div class="left">
+        <img src="https://s3.amazonaws.com/whatsapptastics-assets/whatsapptistics-logo.png" alt="">
+    </div>
+    <div class="right">Developed by Mendy Danzinger</div>
+</footer>
+
+<div class="izimodal" id="report-modal">
+    <div class="modal-wrapper">
+        <h3 class="modal-title">Simple as 1-2-3.</h3>
+        <form action="/report" method="post" enctype="multipart/form-data">
+            <div class="upload-btn-wrapper">
+                <button class="btn">1. Choose Chat File</button>
+                <input required type="file" name="chat" accept=".txt" />
+            </div>
+            <input type="text" required name="email" id="email" class="input" placeholder="2. Enter email to be notified">
+            <a href="/" class="btn--submit">3. Upload</a>
+        </form>
+        <div class="loading">
+            <div class="circle-loader">
+                <div class="checkmark draw"></div>
+            </div>
+        </div>
+        <div class="modal-note">Note: it may take up to a few minutes to generate your report.</div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.min.js"></script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/countup@1.8.2/dist/countUp.min.js"></script>
+<script src="/static/js/app.js"></script>
+</body>
+</html>
+{{end}}

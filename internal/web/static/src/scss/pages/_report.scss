@@ -1,0 +1,48 @@
+.report-page {
+background: #343435;
+
+
+  .report {
+    padding: 40px;
+    min-height: 100vh;
+    color: #343435;
+    position: relative;
+    .report__overview {
+      z-index: 5;
+      position: relative;
+      background: rgba(255,255,255,0.8);
+      padding: 20px;
+      &-title {
+        margin: 0 0 20px;
+        padding: 0 0 20px;
+        border-bottom: 2px solid;
+      }
+      span {
+        font-size: 16px;
+        line-height: 1.6;
+        background: #343435;
+        padding: 2px 4px;
+        color: white;
+        margin: 0 3px;
+      }
+    }
+
+    #report_background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #343435;
+      background-image: url("");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50% 50%;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+  }
+
+  footer {
+    background: #f0f0f0;
+  }
+}

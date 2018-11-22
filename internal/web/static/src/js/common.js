@@ -55,6 +55,4 @@ if ($(".izimodal").length) {
         }
     })
 
-
-
 }

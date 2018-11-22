@@ -1,7 +1,6 @@
 package http
 
 import (
-	"encoding/json"
 	"fmt"
 	"html/template"
 	"io"
@@ -44,18 +43,12 @@ func (h *handler) serveReport(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "Report failed :(", http.StatusBadRequest)
 		return
 	}
-	reportjson, err := json.Marshal(report)
+	err = h.templates.ExecuteTemplate(w, "report", report)
+
 	if err != nil {
-		http.Error(w, "Report failed :(", http.StatusBadRequest)
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
-	fmt.Fprintf(w, "%s", reportjson)
-
-	//err := h.templates.ExecuteTemplate(w, "index", nil)
-	//if err != nil {
-	//	http.Error(w, err.Error(), http.StatusInternalServerError)
-	//	return
-	//}
 }
 
 func (h *handler) newReport(w http.ResponseWriter, r *http.Request) {

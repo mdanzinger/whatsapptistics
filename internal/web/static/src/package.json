@@ -22,5 +22,10 @@
     "gulp-sass": "^4.0.2",
     "gulp-uglify": "^3.0.1",
     "gutil": "^1.6.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.1.6",
+    "@babel/preset-env": "^7.1.6",
+    "gulp-babel": "^8.0.0"
   }
 }

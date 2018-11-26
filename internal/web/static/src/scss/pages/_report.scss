@@ -3,15 +3,22 @@ background: #343435;
 
 
   .report {
-    padding: 40px;
+    padding: 20px 40px 40px ;
     min-height: 100vh;
     color: #343435;
     position: relative;
+    .report__details {
+      z-index: 5;
+      position: relative;
+    }
+    .report__section {
+      background: rgba(255,255,255,0.8);
+      padding: 20px;
+      margin-top: 20px;
+    }
     .report__overview {
       z-index: 5;
       position: relative;
-      background: rgba(255,255,255,0.8);
-      padding: 20px;
       &-title {
         margin: 0 0 20px;
         padding: 0 0 20px;
@@ -25,6 +32,25 @@ background: #343435;
         color: white;
         margin: 0 3px;
       }
+    }
+
+    .report__pies {
+      display: flex;
+      @media (max-width: 767px) {
+        flex-wrap: wrap;
+      }
+      .pie {
+        max-width: 100%;
+        margin: 0 auto;
+        flex: 1 0 50%;
+        @media (max-width: 767px) {
+          flex: 1 0 100%;
+        }
+      }
+    }
+
+    .fade-in {
+      animation: fade-in 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
     }
 
     #report_background {

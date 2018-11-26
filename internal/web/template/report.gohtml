@@ -1,4 +1,4 @@
-{{define "report"}}
+[[define "report"]]
 <!doctype html>
 <html lang="en">
 <head>
@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
     <link rel="stylesheet" href="/static/css/main.css">
     <script>
-        data = {{.}}
+        data = [[.]]
     </script>
 </head>
 <body class="report-page">
@@ -28,10 +28,21 @@
 
 <div class="report">
     <div id="report_background"></div>
-    <div class="report__overview">
-        <h1 class="report__overview-title">Overview</h1>
-        A total of <span id="total_messages" class="count">23198</span> messages were sent, averaging <span id="total_messages_average" class="count">213</span> messages per day. <span id="busiest_hour">9:00 AM</span> appears to be the busiest hour, with an accumulative
-        <span id="hourly_messages" class="count">2907</span> messages sent during that hour.
+    <div class="report__details">
+        <div class="report__overview report__section" v-show="true" style="display: none; animation-delay: 0.3s;">
+            <h1 class="report__overview-title">Overview</h1>
+            In the last <span id="months">{{active_months}}</span> months, a total of <span id="total_messages" class="count">{{total_messages}}</span> messages were sent, averaging <span id="total_messages_average" class="count">{{avg_messages_per_day}}</span> messages per day. <span id="busiest_hour">{{busiest_hour.Hour}}</span> appears to be the busiest hour, with an accumulative
+            <span id="hourly_messages" class="count">{{busiest_hour.Messages}}</span> messages sent during that hour.
+        </div>
+
+        <div class="report__pies report__section" v-show="true" style="display: none;">
+            <div id="message-pie" class="pie" style=""></div>
+            <div id="words-pie" class="pie" style=""></div>
+        </div>
+
+        <div class="report__monthly report__section" v-show="true" style="display: none">
+            <div id="monthly-messages"></div>
+        </div>
     </div>
 </div>
 
@@ -63,11 +74,12 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.5.17/vue.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.min.js"></script>
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/countup@1.8.2/dist/countUp.min.js"></script>
+<script src="https://code.highcharts.com/highcharts.js"></script>
 <script src="/static/js/app.js"></script>
 </body>
 </html>
-{{end}}
+[[end]]

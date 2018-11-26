@@ -1,23 +1,4 @@
 if ($(".report").length) {
-
-    // Init counters
-    var options = {
-        useEasing: true,
-        useGrouping: true,
-        separator: ",",
-        decimal: "."
-    };
-    var statistics = $(".report__overview span.count");
-
-    statistics.each(function(index) {
-        // Find the value we want to animate (what lives inside the p tags)
-        var value = $(statistics[index]).html();
-        // Start animating
-        var statisticAnimation = new CountUp(statistics[index], 0, value, 0, 2, options);
-        statisticAnimation.start();
-    });
-
-
     // Create background particles
     particlesJS("report_background", {
         "particles": {

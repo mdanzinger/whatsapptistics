@@ -17,8 +17,11 @@ type parser interface {
 	// Message returns the actual Message
 	Message(line string) []byte
 
-	// Valid returns false if the message if the line is not a valid message.
+	// Valid returns false if the message is a continuation of the previous message
 	Valid(line string) bool
+
+	//Announcement returns true if message was a group chat announcement (ex: X has added Y to the chat)
+	Announcement(line string) bool
 }
 
 // iosParser is a parser implementation for IOS
@@ -48,6 +51,9 @@ func (p *iosParser) Message(line string) []byte {
 
 func (p *iosParser) Valid(line string) bool {
 	return len(line) > 0 && (strings.Index(line, "[")) != -1
+}
+func (p *iosParser) Announcement(line string) bool {
+	return strings.Index(line, "]") != -1 && strings.Index(line, ": ") == -1
 }
 
 // androidParser is a parser implementation for android
@@ -81,4 +87,8 @@ func (p *androidParser) Valid(line string) bool {
 	//char2 := rune(line[1])
 	//char3 := rune(line[2])
 	//return unicode.IsDigit(char1) && (unicode.IsDigit(char2) || char2 == '/' && (unicode.IsDigit(char3) || char3 == '/'))
+}
+
+func (p *androidParser) Announcement(line string) bool {
+	return strings.Index(line, "M -") != -1 && strings.Index(line, ": ") == -1
 }

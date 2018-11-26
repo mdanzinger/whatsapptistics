@@ -7,6 +7,7 @@ var gulp = require('gulp'),
     rename = require('gulp-rename'),
     clean = require('gulp-clean'),
     concat = require('gulp-concat'),
+    babel = require('gulp-babel'),
     notify = require('gulp-job');
 
 // Copy files
@@ -33,6 +34,9 @@ gulp.task('styles', function() {
 // Scripts
 gulp.task('scripts', function() {
     return gulp.src(['js/*.js','!src/js/vendor/**/*.js'])
+        .pipe(babel({
+            presets: ['@babel/env']
+        }))
         .pipe(concat('app.js'))
         .pipe(gulp.dest('../dist/js'))
         .pipe(rename(function (dir, base, ext) {

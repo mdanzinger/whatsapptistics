@@ -29,6 +29,11 @@ func (a *analyzer) Analyze(chat *chat.Chat) (*report.ChatAnalytics, error) {
 	for scanner.Scan() {
 		line := stripCtlAndExtFromUTF8(scanner.Text())
 
+		// Check if it message is a groupchat announcement ("X has joined chat, X has renamed chat, etc)
+		if a.parser.Announcement(line) {
+			continue
+		}
+
 		// If it's not valid, it's a continuation of the previous message
 		if !a.parser.Valid(line) {
 			// We know the prevParticipant exists, no need to handle errors

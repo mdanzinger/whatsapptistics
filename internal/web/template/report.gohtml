@@ -43,6 +43,21 @@
         <div class="report__monthly report__section" v-show="true" style="display: none">
             <div id="monthly-messages"></div>
         </div>
+        <div class="report__section" v-show="true" style="display:none;">
+            <h2>Chat Participants</h2>
+        </div>
+        <div class="report__participants" v-show="true" style="display: none">
+            <div class="report__participant" v-for="(participant, participant_name) in participants">
+                <div class="participant-name">{{participant_name}}</div>
+                <div class="participant-details">
+                    <div class="participant-statistics">Words Sent: <span>{{participant.WordsSent}}</span></div>
+                    <div class="participant-statistics">Messages Sent: <span>{{participant.MessagesSent}}</span></div>
+                    <div class="participant-statistics">Most Used Emoji: {{get_top_emoji(participant.WordList)}}</div>
+                    <div class="participant-statistics">Most Used Words: {{get_top_word(participant.WordList)}}</div>
+
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 

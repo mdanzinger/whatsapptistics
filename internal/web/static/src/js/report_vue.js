@@ -1,5 +1,4 @@
 if ($(".report").length) {
-
      let report = new Vue({
         el: '.report__details',
         data: {
@@ -82,9 +81,14 @@ if ($(".report").length) {
             // }
         },
         methods: {
-            // update: _.debounce(function (e) {
-            //     this.input = e.target.value
-            // }, 300)
+            get_top_emoji: function (wordlist) {
+                for (var word in wordlist) {
+                    if (is_emoji(wordlist[word].Word)) {
+                        console.log("Found most used emoji:" + wordlist[word].Word)
+                        return wordlist[word].Word
+                    }
+                }
+            }
         },
         mounted() {
             MessagePie(this.messages_pie)
@@ -92,6 +96,7 @@ if ($(".report").length) {
             MonthlyMessages(this.months, this.messages_per_month)
         }
     })
+
 
 
 }

@@ -53,6 +53,42 @@ background: #343435;
       animation: fade-in 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
     }
 
+    .report__participants {
+      display: flex;
+      margin: 20px -15px 0;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      .report__participant {
+        background: rgba(255,255,255,0.8);
+        flex: 1 1 calc(33% - 66px);
+        @media (max-width: 767px) {
+          flex: 1 1 100%;
+        }
+        margin: 0 15px 20px;
+        padding: 20px;
+        &:nth-of-type(n + 4) {
+          max-width: calc(33% - 65px);
+        }
+        .participant-name {
+          font-size: 18px;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+          border-bottom: 2px solid;
+        }
+        .participant-statistics {
+          margin-bottom: 10px;
+          span {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgb(255, 255, 255);
+            background: rgb(52, 52, 53);
+            padding: 2px 4px;
+            margin: 0px 3px;
+          }
+        }
+      }
+    }
+
     #report_background {
       position: absolute;
       width: 100%;

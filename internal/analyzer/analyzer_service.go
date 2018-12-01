@@ -66,7 +66,7 @@ func (as *analyzerService) handler(j *job.Chat) {
 	// Analyze and store result
 	analytics, err := as.analyze(c)
 	if err != nil {
-		as.logger.Printf("Error analzying: %v \n", err)
+		as.logger.Printf("Error analyzing: %v \n", err)
 	}
 
 	// Create report obj

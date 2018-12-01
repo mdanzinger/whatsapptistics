@@ -29,7 +29,6 @@ var stopwords = map[string]string{
 	"am":           "",
 	"among":        "",
 	"amongst":      "",
-	"amoungst":     "",
 	"amount":       "",
 	"media":        "",
 	"an":           "",

@@ -4,14 +4,14 @@ import (
 	"log"
 	"os"
 
-	"github.com/mdanzinger/whatsapptistics/internal/job/sqs"
+	"github.com/mdanzinger/whatsapptistics/job/sqs"
 
-	"github.com/mdanzinger/whatsapptistics/internal/chat"
-	"github.com/mdanzinger/whatsapptistics/internal/http"
-	"github.com/mdanzinger/whatsapptistics/internal/report"
-	"github.com/mdanzinger/whatsapptistics/internal/store/dynamodb"
-	"github.com/mdanzinger/whatsapptistics/internal/store/gocache"
-	"github.com/mdanzinger/whatsapptistics/internal/store/s3"
+	"github.com/mdanzinger/whatsapptistics/chat"
+	"github.com/mdanzinger/whatsapptistics/http"
+	"github.com/mdanzinger/whatsapptistics/report"
+	"github.com/mdanzinger/whatsapptistics/store/dynamodb"
+	"github.com/mdanzinger/whatsapptistics/store/gocache"
+	"github.com/mdanzinger/whatsapptistics/store/s3"
 )
 
 func main() {

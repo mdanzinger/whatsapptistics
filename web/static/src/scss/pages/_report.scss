@@ -1,0 +1,121 @@
+.report-page {
+background: #343435;
+
+
+  .report {
+    padding: 20px 40px 40px ;
+    min-height: 100vh;
+    color: #343435;
+    position: relative;
+    .report__details {
+      z-index: 5;
+      position: relative;
+    }
+    .report__section {
+      background: rgba(255,255,255,0.8);
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .report__overview {
+      z-index: 5;
+      position: relative;
+      &-title {
+        margin: 0 0 20px;
+        padding: 0 0 20px;
+        border-bottom: 2px solid;
+      }
+      span {
+        font-size: 16px;
+        line-height: 1.6;
+        background: #343435;
+        padding: 2px 4px;
+        color: white;
+        margin: 0 3px;
+      }
+    }
+
+    .report__pies {
+      display: flex;
+      @media (max-width: 767px) {
+        flex-wrap: wrap;
+      }
+      .pie {
+        max-width: 100%;
+        margin: 0 auto;
+        flex: 1 0 50%;
+        @media (max-width: 767px) {
+          flex: 1 0 100%;
+        }
+      }
+    }
+
+    .fade-in {
+      animation: fade-in 1.5s cubic-bezier(0.390, 0.575, 0.565, 1.000) both;
+    }
+
+    .report__participants {
+      display: flex;
+      margin: 20px -15px 0;
+      justify-content: flex-start;
+      flex-wrap: wrap;
+      align-items: baseline;
+      .report__participant {
+        background: rgba(255,255,255,0.8);
+        flex: 1 1 calc(33% - 66px);
+        @media (max-width: 767px) {
+          flex: 1 1 100%;
+        }
+        margin: 0 15px 20px;
+        padding: 20px;
+        &:nth-of-type(n + 4) {
+          max-width: calc(33% - 65px);
+        }
+        .participant-name {
+          font-size: 18px;
+          padding-bottom: 10px;
+          margin-bottom: 20px;
+          border-bottom: 2px solid;
+        }
+        .participant-statistics {
+          margin-bottom: 10px;
+          .highlight {
+            font-size: 16px;
+            line-height: 1.6;
+            color: rgb(255, 255, 255);
+            background: rgb(52, 52, 53);
+            padding: 2px 4px;
+            margin: 0px 3px;
+          }
+          .wordlist {
+            display: inline-block;
+            animation-duration: 0.4s;
+            animation-fill-mode: both;
+            animation-name: zoomIn;
+            margin-bottom: 10px;
+            cursor: pointer;
+            text-transform: capitalize;
+          }
+
+        }
+      }
+    }
+
+    #report_background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-color: #343435;
+      background-image: url("");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: 50% 50%;
+      left: 0;
+      bottom: 0;
+      z-index: 1;
+    }
+  }
+
+  footer {
+    background: #f0f0f0;
+  }
+}

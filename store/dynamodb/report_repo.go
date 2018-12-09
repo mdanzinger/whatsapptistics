@@ -4,6 +4,8 @@ import (
 	"context"
 	"fmt"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/mdanzinger/whatsapptistics/report"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -31,7 +33,7 @@ func (s *reportRepo) Get(ctx context.Context, key string) (*report.Report, error
 
 	// Cache misses.. get report from db
 	result, err := s.db.GetItemWithContext(ctx, &dynamodb.GetItemInput{
-		TableName: aws.String("whatsapptistics_reports"),
+		TableName: aws.String(os.Getenv("AWS_DYNAMODB_REPORTS")),
 		Key: map[string]*dynamodb.AttributeValue{
 			"ReportID": {
 				S: aws.String(key),
@@ -70,7 +72,7 @@ func (s *reportRepo) Store(r *report.Report) error {
 
 	input := &dynamodb.PutItemInput{
 		Item:      i,
-		TableName: aws.String("whatsapptistics_reports"),
+		TableName: aws.String(os.Getenv("AWS_DYNAMODB_REPORTS")),
 	}
 
 	// Insert item into db

@@ -6,6 +6,8 @@ import (
 	"fmt"
 	"log"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/mdanzinger/whatsapptistics/chat"
 
 	"github.com/aws/aws-sdk-go/aws"
@@ -21,7 +23,7 @@ type chatRepo struct {
 
 func (s *chatRepo) Upload(ctx context.Context, chat *chat.Chat) error {
 	result, err := s.uploader.UploadWithContext(ctx, &s3manager.UploadInput{
-		Bucket: aws.String("whatsappchats"),
+		Bucket: aws.String(os.Getenv("AWS_S3_CHATS")),
 		Key:    aws.String(chat.ChatID),
 		Body:   bytes.NewReader(chat.Content),
 	})
@@ -37,7 +39,7 @@ func (s *chatRepo) Download(id string) (*chat.Chat, error) {
 
 	_, err := s.downloader.Download(reportBuf,
 		&s3.GetObjectInput{
-			Bucket: aws.String("whatsappchats"),
+			Bucket: aws.String(os.Getenv("AWS_S3_CHATS")),
 			Key:    aws.String(id),
 		})
 

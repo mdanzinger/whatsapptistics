@@ -4,16 +4,14 @@ import (
 	"encoding/json"
 	"fmt"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/mdanzinger/whatsapptistics/job"
 
 	"github.com/aws/aws-sdk-go/aws/session"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/service/sns"
-)
-
-const (
-	TopicARN = "arn:aws:sns:us-east-2:582875565416:whatsapp_chats"
 )
 
 type SnsQueuer struct {
@@ -28,7 +26,7 @@ func (s *SnsQueuer) QueueJob(job *job.Chat) error {
 
 	params := &sns.PublishInput{
 		Message:  aws.String(string(j)),
-		TopicArn: aws.String(TopicARN),
+		TopicArn: aws.String(os.Getenv("TOPIC_ARN")),
 	}
 
 	fmt.Println("Params: ", params)

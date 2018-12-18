@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/joho/godotenv/autoload"
-
 	"github.com/mdanzinger/whatsapptistics/chat"
+
+	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/session"

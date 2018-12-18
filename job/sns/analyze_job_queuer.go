@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	_ "github.com/joho/godotenv/autoload"
+	"os"
 
 	"github.com/mdanzinger/whatsapptistics/job"
 

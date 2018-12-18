@@ -32,7 +32,7 @@ func (n *EmailNotifier) Notify(reportID string, email string) error {
 }
 
 func (n *EmailNotifier) parseTemplate(reportID string) (string, error) {
-	t, err := template.ParseFiles("../../web/template/" + TEMPLATE_NAME)
+	t, err := template.ParseFiles("web/template/" + TEMPLATE_NAME)
 	if err != nil {
 		return "", err
 	}

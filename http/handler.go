@@ -24,7 +24,7 @@ type handler struct {
 
 // Compile templates
 func (h *handler) CompileTemplates() {
-	h.templates = template.Must(template.New("index").Delims("[[", "]]").ParseGlob("../../web/template/*"))
+	h.templates = template.Must(template.New("index").Delims("[[", "]]").ParseGlob("web/template/*"))
 }
 
 // index returns the site index

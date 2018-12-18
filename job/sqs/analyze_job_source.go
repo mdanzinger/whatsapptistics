@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	_ "github.com/joho/godotenv/autoload"
+	"os"
 
 	"github.com/mdanzinger/whatsapptistics/job"
 	"github.com/mdanzinger/whatsapptistics/job/sns"
@@ -16,14 +16,13 @@ import (
 	"github.com/aws/aws-sdk-go/service/sqs"
 )
 
-
 const (
 	MAX_MESSAGES = 10 // sqs has a 10 message limit.
 )
 
 var (
 	params = &sqs.ReceiveMessageInput{
-		QueueUrl:            aws.String(os.Getenv("QUEUE_URL"), // Required
+		QueueUrl:            aws.String(os.Getenv("QUEUE_URL")), // Required
 		MaxNumberOfMessages: aws.Int64(MAX_MESSAGES),
 		MessageAttributeNames: []*string{
 			aws.String("All"), // Required
@@ -94,7 +93,7 @@ func (s *sqsSource) QueueJob(j *job.Chat) error {
 // deleteMessage removes the message from the queue
 func (s *sqsSource) deleteMessage(handle *string) error {
 	_, err := s.sqs.DeleteMessage(&sqs.DeleteMessageInput{
-		QueueUrl:      aws.String(os.Getenv("QUEUE_URL"),
+		QueueUrl:      aws.String(os.Getenv("QUEUE_URL")),
 		ReceiptHandle: handle,
 	})
 	if err != nil {

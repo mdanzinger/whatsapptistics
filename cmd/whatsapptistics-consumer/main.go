@@ -4,6 +4,8 @@ import (
 	"log"
 	"os"
 
+	_ "github.com/joho/godotenv/autoload"
+
 	"github.com/mdanzinger/whatsapptistics/notify/ses"
 
 	"github.com/mdanzinger/whatsapptistics/chat"

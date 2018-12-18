@@ -3,8 +3,7 @@ package dynamodb
 import (
 	"context"
 	"fmt"
-
-	_ "github.com/joho/godotenv/autoload"
+	"os"
 
 	"github.com/mdanzinger/whatsapptistics/report"
 

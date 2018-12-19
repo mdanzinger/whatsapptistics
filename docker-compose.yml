@@ -12,11 +12,13 @@ services:
       - LETSENCRYPT_EMAIL=mendydanzinger@gmail.com
     expose:
       - "8000"
+    restart: always
   analyzer:
     build:
       context: ./
       dockerfile: Dockerfile.analyzer
     tty: true
+    restart: always
   nginx-proxy:
     image: jwilder/nginx-proxy
     container_name: nginx-proxy

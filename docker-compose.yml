@@ -7,8 +7,9 @@ services:
       dockerfile: Dockerfile.server
     tty: true
     environment:
-      - VIRTUAL_HOST=whatsapptistics.local
-      - CERT_NAME=whatsapptistics.local
+      - VIRTUAL_HOST=whatsapptistics.com,www.whatsapptistics.com
+      - LETSENCRYPT_HOST=whatsapptistics.com
+      - LETSENCRYPT_EMAIL=mendydanzinger@gmail.com
     expose:
       - "8000"
   analyzer:
@@ -24,4 +25,12 @@ services:
       - "443:443"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs
+      - /etc/nginx/vhost.d
+      - /usr/share/nginx/html
+      - /etc/nginx/certs
+  letsencrypt-nginx-proxy-companion:
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    volumes_from:
+      - "nginx-proxy"

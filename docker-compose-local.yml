@@ -1,0 +1,27 @@
+version: '2'
+
+services:
+  server:
+    build:
+      context: ./
+      dockerfile: Dockerfile.server
+    tty: true
+    environment:
+      - VIRTUAL_HOST=whatsapptistics.local
+      - CERT_NAME=whatsapptistics.local
+    expose:
+      - "8000"
+  analyzer:
+    build:
+      context: ./
+      dockerfile: Dockerfile.analyzer
+    tty: true
+  nginx-proxy:
+    image: jwilder/nginx-proxy
+    container_name: nginx-proxy
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - ./certs:/etc/nginx/certs

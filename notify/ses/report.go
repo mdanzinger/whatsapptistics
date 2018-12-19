@@ -11,7 +11,7 @@ import (
 
 const (
 	// TODO: Make everything configuable via viper
-	Sender = "mendydanzinger@gmail.com"
+	Sender = "notifier@whatsapptistics.com"
 
 	//ConfigurationSet = "ConfigSet"
 

@@ -5,7 +5,7 @@ import "net/http"
 // RegisterRoutes registers all the routes for the service
 func (s *Server) registerRoutes() {
 	// Static assets
-	fs := http.FileServer(http.Dir("./web/static/dist/"))
+	fs := http.FileServer(http.Dir("web/static/dist/"))
 	s.router.PathPrefix("/static/").Handler(http.StripPrefix("/static/", fs))
 
 	// Home page
